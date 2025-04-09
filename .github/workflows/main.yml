@@ -16,12 +16,12 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - name: Run RSpec with coverage
-        uses: paambaati/codeclimate-action@v9.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      - name: Run RSpec
+        run: bundle exec rspec
+      - uses: qltysh/qlty-action/coverage@main
         with:
-          coverageCommand: bundle exec rspec
+          coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          files: coverage/.resultset.json
 
   rubocop:
     runs-on: ubuntu-latest
