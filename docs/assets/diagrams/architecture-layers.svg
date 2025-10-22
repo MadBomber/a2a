@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 600" style="background:transparent">
+  <defs>
+    <style>
+      .layer-box { fill: #2d3748; stroke: #4a5568; stroke-width: 2; }
+      .layer-title { fill: #e2e8f0; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .component-box { fill: #1a202c; stroke: #4a5568; stroke-width: 1; }
+      .component-text { fill: #cbd5e0; font-family: Arial, sans-serif; font-size: 12px; text-anchor: middle; }
+      .arrow { stroke: #63b3ed; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .uses-arrow { stroke: #68d391; stroke-width: 1; fill: none; stroke-dasharray: 3,3; marker-end: url(#uses-arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#63b3ed" />
+    </marker>
+    <marker id="uses-arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#68d391" />
+    </marker>
+  </defs>
+
+  <!-- Application Layer -->
+  <rect x="50" y="30" width="600" height="100" rx="8" class="layer-box"/>
+  <text x="350" y="55" class="layer-title">Application Layer</text>
+  <rect x="100" y="70" width="200" height="40" rx="4" class="component-box"/>
+  <text x="200" y="95" class="component-text">Client Applications</text>
+  <rect x="350" y="70" width="200" height="40" rx="4" class="component-box"/>
+  <text x="450" y="95" class="component-text">Server Applications</text>
+
+  <!-- Interface Layer -->
+  <rect x="50" y="160" width="600" height="100" rx="8" class="layer-box"/>
+  <text x="350" y="185" class="layer-title">Interface Layer</text>
+  <rect x="100" y="200" width="200" height="40" rx="4" class="component-box"/>
+  <text x="200" y="225" class="component-text">A2A::Client::Base</text>
+  <rect x="350" y="200" width="200" height="40" rx="4" class="component-box"/>
+  <text x="450" y="225" class="component-text">A2A::Server::Base</text>
+
+  <!-- Protocol Layer -->
+  <rect x="50" y="290" width="600" height="100" rx="8" class="layer-box"/>
+  <text x="350" y="315" class="layer-title">Protocol Layer</text>
+  <rect x="80" y="330" width="160" height="40" rx="4" class="component-box"/>
+  <text x="160" y="355" class="component-text">JSON-RPC Request</text>
+  <rect x="270" y="330" width="160" height="40" rx="4" class="component-box"/>
+  <text x="350" y="355" class="component-text">JSON-RPC Response</text>
+  <rect x="460" y="330" width="160" height="40" rx="4" class="component-box"/>
+  <text x="540" y="355" class="component-text">Protocol Error</text>
+
+  <!-- Models Layer -->
+  <rect x="50" y="420" width="600" height="140" rx="8" class="layer-box"/>
+  <text x="350" y="445" class="layer-title">Models Layer</text>
+  <rect x="70" y="460" width="110" height="35" rx="4" class="component-box"/>
+  <text x="125" y="482" class="component-text">Agent Card</text>
+  <rect x="195" y="460" width="110" height="35" rx="4" class="component-box"/>
+  <text x="250" y="482" class="component-text">Task</text>
+  <rect x="320" y="460" width="110" height="35" rx="4" class="component-box"/>
+  <text x="375" y="482" class="component-text">Message</text>
+  <rect x="445" y="460" width="110" height="35" rx="4" class="component-box"/>
+  <text x="500" y="482" class="component-text">Parts</text>
+  <rect x="570" y="460" width="110" height="35" rx="4" class="component-box"/>
+  <text x="625" y="482" class="component-text">Artifact</text>
+
+  <!-- Connections -->
+  <path d="M 200,130 L 200,190" class="arrow"/>
+  <path d="M 450,130 L 450,190" class="arrow"/>
+  <path d="M 200,240 L 160,280" class="uses-arrow"/>
+  <path d="M 200,240 L 350,280" class="uses-arrow"/>
+  <path d="M 450,240 L 160,280" class="uses-arrow"/>
+  <path d="M 450,240 L 350,280" class="uses-arrow"/>
+  <path d="M 160,370 L 250,410" class="uses-arrow"/>
+  <path d="M 350,370 L 250,410" class="uses-arrow"/>
+</svg>

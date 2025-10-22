@@ -1,0 +1,177 @@
+# MkDocs Configuration for A2A Documentation
+site_name: A2A - Agent2Agent Protocol
+site_description: Ruby implementation of the Agent2Agent protocol for AI agent communication
+site_author: Dewayne VanHoozer
+site_url: https://madbomber.github.io/a2a
+copyright: Copyright &copy; 2025 Dewayne VanHoozer
+
+# Repository information
+repo_name: madbomber/a2a
+repo_url: https://github.com/madbomber/a2a
+edit_uri: edit/main/docs/
+
+# Configuration
+theme:
+  name: material
+  
+  # Color scheme - Default to light mode
+  palette:
+    # Palette toggle for light mode (default)
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  # Typography
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+  # Theme features
+  features:
+    # Navigation
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.path
+    - navigation.indexes
+    - navigation.top
+
+    # Table of contents
+    - toc.follow
+
+    # Search
+    - search.suggest
+    - search.highlight
+    - search.share
+
+    # Header
+    - header.autohide
+
+    # Content
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
+    - content.action.edit
+    - content.action.view
+
+# Plugins
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+
+# Extensions
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      title: On this page
+
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: madbomber
+      repo: a2a
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Extra CSS and JavaScript
+extra_css:
+  - assets/css/custom.css
+
+extra_javascript:
+  - assets/js/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+# Social media and extra configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/madbomber/a2a
+      name: A2A on GitHub
+    - icon: fontawesome/solid/gem
+      link: https://rubygems.org/gems/a2a
+      name: A2A on RubyGems
+
+  version:
+    provider: mike
+
+# Navigation
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Quick Start: quickstart.md
+  - Guides:
+    - guides/index.md
+    - Getting Started: guides/getting-started.md
+    - Creating Agent Cards: guides/agent-cards.md
+    - Working with Tasks: guides/tasks.md
+    - Messages and Parts: guides/messages.md
+    - Handling Artifacts: guides/artifacts.md
+    - Error Handling: guides/errors.md
+  - API Reference:
+    - api/index.md
+    - Models: api/models.md
+    - Protocol: api/protocol.md
+    - Client: api/client.md
+    - Server: api/server.md
+  - Architecture:
+    - Overview: architecture/index.md
+    - Gem Architecture: architecture/gem-architecture.md
+    - Design Principles: architecture/design.md
+    - Protocol Flow: architecture/flow.md
+  - Examples:
+    - examples/index.md
+    - Basic Usage: examples/basic.md
+    - Building a Client: examples/client.md
+    - Building a Server: examples/server.md
+  - Advanced:
+    - Streaming Support: advanced/streaming.md
+    - Push Notifications: advanced/push-notifications.md
+    - Multi-turn Conversations: advanced/conversations.md
+  - Protocol Specification: protocol-spec.md

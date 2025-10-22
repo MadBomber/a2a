@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" style="background:transparent">
+  <defs>
+    <style>
+      .participant-box { fill: #2d3748; stroke: #4a5568; stroke-width: 2; }
+      .participant-text { fill: #e2e8f0; font-family: Arial, sans-serif; font-size: 13px; text-anchor: middle; }
+      .lifeline { stroke: #4a5568; stroke-width: 1; stroke-dasharray: 5,5; }
+      .arrow { stroke: #63b3ed; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .return-arrow { stroke: #68d391; stroke-width: 2; fill: none; stroke-dasharray: 5,5; marker-end: url(#return-arrowhead); }
+      .arrow-text { fill: #a0aec0; font-family: Arial, sans-serif; font-size: 11px; }
+      .note-box { fill: #1a202c; stroke: #4a5568; stroke-width: 1; }
+      .note-text { fill: #cbd5e0; font-family: Arial, sans-serif; font-size: 11px; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#63b3ed" />
+    </marker>
+    <marker id="return-arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#68d391" />
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="50" y="20" width="80" height="40" rx="4" class="participant-box"/>
+  <text x="90" y="45" class="participant-text">Client</text>
+
+  <rect x="260" y="20" width="80" height="40" rx="4" class="participant-box"/>
+  <text x="300" y="45" class="participant-text">Server</text>
+
+  <!-- Lifelines -->
+  <line x1="90" y1="70" x2="90" y2="410" class="lifeline"/>
+  <line x1="300" y1="70" x2="300" y2="410" class="lifeline"/>
+
+  <!-- Interactions -->
+  <!-- 1. Fetch Agent Card -->
+  <path d="M 90,90 L 290,90" class="arrow"/>
+  <text x="140" y="85" class="arrow-text">1. Fetch Agent Card</text>
+
+  <path d="M 290,110 L 90,110" class="return-arrow"/>
+  <text x="140" y="125" class="arrow-text">Agent capabilities &amp; skills</text>
+
+  <!-- 2. Send Task -->
+  <path d="M 90,150 L 290,150" class="arrow"/>
+  <text x="130" y="145" class="arrow-text">2. Send Task (with Message)</text>
+
+  <!-- 3. Process task (note) -->
+  <rect x="240" y="170" width="120" height="35" rx="3" class="note-box"/>
+  <text x="300" y="190" class="note-text" text-anchor="middle">3. Process task</text>
+
+  <!-- 4. Return Task -->
+  <path d="M 290,230 L 90,230" class="return-arrow"/>
+  <text x="130" y="245" class="arrow-text">4. Return Task (with Artifacts)</text>
+</svg>
