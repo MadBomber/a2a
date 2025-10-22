@@ -24,19 +24,19 @@ class AgentSkillTest < Minitest::Test
         id: "skill-002",
         name: "Data Analysis",
         description: "Analyzes structured data",
-        tags: ["analytics", "statistics"],
+        tags: %w[analytics statistics],
         examples: ["Analyze sales data", "Generate report"],
-        input_modes: ["text", "data"],
-        output_modes: ["text", "data", "file"]
+        input_modes: %w[text data],
+        output_modes: %w[text data file]
       )
 
       assert_equal "skill-002", skill.id
       assert_equal "Data Analysis", skill.name
       assert_equal "Analyzes structured data", skill.description
-      assert_equal ["analytics", "statistics"], skill.tags
+      assert_equal %w[analytics statistics], skill.tags
       assert_equal ["Analyze sales data", "Generate report"], skill.examples
-      assert_equal ["text", "data"], skill.input_modes
-      assert_equal ["text", "data", "file"], skill.output_modes
+      assert_equal %w[text data], skill.input_modes
+      assert_equal %w[text data file], skill.output_modes
     end
 
     def test_creates_agent_skill_with_description
@@ -53,10 +53,10 @@ class AgentSkillTest < Minitest::Test
       skill = A2A::Models::AgentSkill.new(
         id: "skill-004",
         name: "Image Processing",
-        tags: ["vision", "ml", "ai"]
+        tags: %w[vision ml ai]
       )
 
-      assert_equal ["vision", "ml", "ai"], skill.tags
+      assert_equal %w[vision ml ai], skill.tags
     end
 
     def test_creates_agent_skill_with_examples
@@ -78,11 +78,11 @@ class AgentSkillTest < Minitest::Test
         id: "skill-006",
         name: "OCR",
         input_modes: ["file"],
-        output_modes: ["text", "data"]
+        output_modes: %w[text data]
       )
 
       assert_equal ["file"], skill.input_modes
-      assert_equal ["text", "data"], skill.output_modes
+      assert_equal %w[text data], skill.output_modes
     end
   end
 
@@ -108,20 +108,20 @@ class AgentSkillTest < Minitest::Test
         id: "skill-002",
         name: "Advanced Skill",
         description: "A complex skill",
-        tags: ["tag1", "tag2"],
-        examples: ["example1", "example2"],
+        tags: %w[tag1 tag2],
+        examples: %w[example1 example2],
         input_modes: ["text"],
-        output_modes: ["text", "data"]
+        output_modes: %w[text data]
       )
       hash = skill.to_h
 
       assert_equal "skill-002", hash[:id]
       assert_equal "Advanced Skill", hash[:name]
       assert_equal "A complex skill", hash[:description]
-      assert_equal ["tag1", "tag2"], hash[:tags]
-      assert_equal ["example1", "example2"], hash[:examples]
+      assert_equal %w[tag1 tag2], hash[:tags]
+      assert_equal %w[example1 example2], hash[:examples]
       assert_equal ["text"], hash[:inputModes]
-      assert_equal ["text", "data"], hash[:outputModes]
+      assert_equal %w[text data], hash[:outputModes]
     end
 
     def test_to_h_uses_camel_case_for_modes
@@ -161,9 +161,9 @@ class AgentSkillTest < Minitest::Test
         id: "skill-001",
         name: "Parsing",
         description: "Parse structured data",
-        tags: ["parser", "data"],
+        tags: %w[parser data],
         examples: ["Parse JSON", "Parse XML"],
-        inputModes: ["text", "file"],
+        inputModes: %w[text file],
         outputModes: ["data"]
       }
       skill = A2A::Models::AgentSkill.from_hash(hash)
@@ -171,9 +171,9 @@ class AgentSkillTest < Minitest::Test
       assert_equal "skill-001", skill.id
       assert_equal "Parsing", skill.name
       assert_equal "Parse structured data", skill.description
-      assert_equal ["parser", "data"], skill.tags
+      assert_equal %w[parser data], skill.tags
       assert_equal ["Parse JSON", "Parse XML"], skill.examples
-      assert_equal ["text", "file"], skill.input_modes
+      assert_equal %w[text file], skill.input_modes
       assert_equal ["data"], skill.output_modes
     end
 
@@ -250,10 +250,10 @@ class AgentSkillTest < Minitest::Test
         id: "skill-002",
         name: "Complex Skill",
         description: "A skill with all attributes",
-        tags: ["complex", "featured"],
+        tags: %w[complex featured],
         examples: ["Example 1", "Example 2"],
-        input_modes: ["text", "file"],
-        output_modes: ["text", "data", "file"]
+        input_modes: %w[text file],
+        output_modes: %w[text data file]
       )
 
       hash = original.to_h
@@ -322,7 +322,7 @@ class AgentSkillTest < Minitest::Test
         id: "skill-005",
         name: "翻訳 Translation",
         description: "Traducción de texto 🌍",
-        tags: ["言語", "idioma"]
+        tags: %w[言語 idioma]
       )
 
       assert_equal "翻訳 Translation", skill.name
@@ -336,7 +336,7 @@ class AgentSkillTest < Minitest::Test
         id: "text-summarization",
         name: "Text Summarization",
         description: "Generates concise summaries of long texts",
-        tags: ["nlp", "text-processing", "summarization"],
+        tags: %w[nlp text-processing summarization],
         examples: [
           "Summarize this article in 3 sentences",
           "Create a brief summary of the document"
@@ -356,13 +356,13 @@ class AgentSkillTest < Minitest::Test
         id: "data-analytics",
         name: "Data Analytics",
         description: "Analyzes structured data and generates insights",
-        tags: ["analytics", "statistics", "data-science"],
+        tags: %w[analytics statistics data-science],
         examples: [
           "Analyze sales trends from CSV",
           "Generate statistical summary"
         ],
-        input_modes: ["file", "data"],
-        output_modes: ["text", "data", "file"]
+        input_modes: %w[file data],
+        output_modes: %w[text data file]
       )
 
       assert_equal "data-analytics", skill.id
@@ -375,10 +375,10 @@ class AgentSkillTest < Minitest::Test
         id: "image-caption",
         name: "Image Captioning",
         description: "Generates text descriptions of images",
-        tags: ["vision", "ai", "multimodal"],
+        tags: %w[vision ai multimodal],
         examples: ["Describe what's in this image"],
         input_modes: ["file"],
-        output_modes: ["text", "data"]
+        output_modes: %w[text data]
       )
 
       assert_equal ["file"], skill.input_modes
@@ -391,7 +391,7 @@ class AgentSkillTest < Minitest::Test
         id: "spell-check",
         name: "Spell Checking",
         description: "Checks and corrects spelling errors",
-        tags: ["text", "correction"]
+        tags: %w[text correction]
       )
 
       assert_nil skill.examples
@@ -424,9 +424,9 @@ class AgentSkillTest < Minitest::Test
       skill = A2A::Models::AgentSkill.new(
         id: "test",
         name: "Test",
-        tags: ["tag1", "tag2"]
+        tags: %w[tag1 tag2]
       )
-      assert_equal ["tag1", "tag2"], skill.tags
+      assert_equal %w[tag1 tag2], skill.tags
     end
 
     def test_examples_reader

@@ -18,56 +18,56 @@ module A2A
   # Specific A2A protocol errors based on JSON-RPC error codes
   class JSONParseError < JSONRPCError
     def initialize(data: nil)
-      super('Invalid JSON payload', code: -32700, data: data)
+      super('Invalid JSON payload', code: -32_700, data: data)
     end
   end
 
   class InvalidRequestError < JSONRPCError
     def initialize(data: nil)
-      super('Request payload validation error', code: -32600, data: data)
+      super('Request payload validation error', code: -32_600, data: data)
     end
   end
 
   class MethodNotFoundError < JSONRPCError
     def initialize(data: nil)
-      super('Method not found', code: -32601, data: data)
+      super('Method not found', code: -32_601, data: data)
     end
   end
 
   class InvalidParamsError < JSONRPCError
     def initialize(data: nil)
-      super('Invalid parameters', code: -32602, data: data)
+      super('Invalid parameters', code: -32_602, data: data)
     end
   end
 
   class InternalError < JSONRPCError
     def initialize(data: nil)
-      super('Internal error', code: -32603, data: data)
+      super('Internal error', code: -32_603, data: data)
     end
   end
 
   # A2A-specific errors
   class TaskNotFoundError < JSONRPCError
     def initialize
-      super('Task not found', code: -32001, data: nil)
+      super('Task not found', code: -32_001, data: nil)
     end
   end
 
   class TaskNotCancelableError < JSONRPCError
     def initialize
-      super('Task cannot be canceled', code: -32002, data: nil)
+      super('Task cannot be canceled', code: -32_002, data: nil)
     end
   end
 
   class PushNotificationNotSupportedError < JSONRPCError
     def initialize
-      super('Push Notification is not supported', code: -32003, data: nil)
+      super('Push Notification is not supported', code: -32_003, data: nil)
     end
   end
 
   class UnsupportedOperationError < JSONRPCError
     def initialize
-      super('This operation is not supported', code: -32004, data: nil)
+      super('This operation is not supported', code: -32_004, data: nil)
     end
   end
 end

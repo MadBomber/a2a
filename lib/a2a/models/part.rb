@@ -22,8 +22,8 @@ module A2A
         }.compact
       end
 
-      def to_json(*args)
-        to_h.to_json(*args)
+      def to_json(*)
+        to_h.to_json(*)
       end
 
       # Factory method to create the appropriate Part subclass from a hash
@@ -36,7 +36,7 @@ module A2A
         when 'data'
           DataPart.from_hash(hash)
         else
-          raise ArgumentError, "Unknown part type: #{hash[:type] || hash['type']}"
+          raise ArgumentError, "Unknown part type: #{hash[:type] || hash["type"]}"
         end
       end
     end

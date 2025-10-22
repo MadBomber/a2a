@@ -22,14 +22,14 @@ agent_card = A2A::Models::AgentCard.new(
       id: "text-processing",
       name: "Text Processing",
       description: "Process and analyze text content",
-      tags: ["nlp", "text"],
+      tags: %w[nlp text],
       examples: ["Analyze sentiment", "Extract keywords"]
     },
     {
       id: "translation",
       name: "Translation",
       description: "Translate text between languages",
-      tags: ["translation", "i18n"]
+      tags: %w[translation i18n]
     }
   ],
   provider: {
@@ -41,7 +41,7 @@ agent_card = A2A::Models::AgentCard.new(
 
 puts "Agent Name: #{agent_card.name}"
 puts "Agent URL: #{agent_card.url}"
-puts "Skills: #{agent_card.skills.map(&:name).join(', ')}"
+puts "Skills: #{agent_card.skills.map(&:name).join(", ")}"
 puts "Supports streaming: #{agent_card.capabilities.streaming?}"
 puts
 
@@ -117,7 +117,7 @@ artifact = A2A::Models::Artifact.new(
       data: {
         word_count: 1234,
         sentiment: "positive",
-        keywords: ["example", "test", "demo"]
+        keywords: %w[example test demo]
       }
     )
   ]
@@ -134,7 +134,7 @@ require 'json'
 
 agent_json = JSON.pretty_generate(agent_card.to_h)
 puts "AgentCard as JSON:"
-puts agent_json[0..200] + "..."
+puts "#{agent_json[0..200]}..."
 puts
 
 # Example 7: Error handling
@@ -142,7 +142,7 @@ puts "=== Example 7: Error Handling ==="
 
 begin
   # Try to create a task with invalid state
-  invalid_state = A2A::Models::TaskState.new("invalid-state")
+  A2A::Models::TaskState.new("invalid-state")
 rescue ArgumentError => e
   puts "Caught error: #{e.message}"
 end

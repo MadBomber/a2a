@@ -6,44 +6,44 @@ class ProtocolErrorTest < Minitest::Test
   describe 'A2A::Protocol::Error' do
     def test_initialization_with_all_fields
       error = A2A::Protocol::Error.new(
-        code: -32001,
+        code: -32_001,
         message: 'Task not found',
         data: { taskId: 'task-123' }
       )
 
-      assert_equal(-32001, error.code)
+      assert_equal(-32_001, error.code)
       assert_equal 'Task not found', error.message
       assert_equal({ taskId: 'task-123' }, error.data)
     end
 
     def test_initialization_without_data
       error = A2A::Protocol::Error.new(
-        code: -32600,
+        code: -32_600,
         message: 'Invalid request'
       )
 
-      assert_equal(-32600, error.code)
+      assert_equal(-32_600, error.code)
       assert_equal 'Invalid request', error.message
       assert_nil error.data
     end
 
     def test_to_h_with_all_fields
       error = A2A::Protocol::Error.new(
-        code: -32001,
+        code: -32_001,
         message: 'Task not found',
         data: { taskId: 'task-123' }
       )
 
       hash = error.to_h
 
-      assert_equal(-32001, hash[:code])
+      assert_equal(-32_001, hash[:code])
       assert_equal 'Task not found', hash[:message]
       assert_equal({ taskId: 'task-123' }, hash[:data])
     end
 
     def test_to_h_excludes_nil_data
       error = A2A::Protocol::Error.new(
-        code: -32600,
+        code: -32_600,
         message: 'Invalid request'
       )
 
@@ -56,28 +56,28 @@ class ProtocolErrorTest < Minitest::Test
 
     def test_from_hash_with_symbol_keys
       hash = {
-        code: -32602,
+        code: -32_602,
         message: 'Invalid params',
         data: { field: 'taskId' }
       }
 
       error = A2A::Protocol::Error.from_hash(hash)
 
-      assert_equal(-32602, error.code)
+      assert_equal(-32_602, error.code)
       assert_equal 'Invalid params', error.message
       assert_equal({ field: 'taskId' }, error.data)
     end
 
     def test_from_hash_with_string_keys
       hash = {
-        'code' => -32602,
+        'code' => -32_602,
         'message' => 'Invalid params',
         'data' => { 'field' => 'taskId' }
       }
 
       error = A2A::Protocol::Error.from_hash(hash)
 
-      assert_equal(-32602, error.code)
+      assert_equal(-32_602, error.code)
       assert_equal 'Invalid params', error.message
       assert_equal({ 'field' => 'taskId' }, error.data)
     end
@@ -87,7 +87,7 @@ class ProtocolErrorTest < Minitest::Test
 
       error = A2A::Protocol::Error.from_exception(exception)
 
-      assert_equal(-32001, error.code)
+      assert_equal(-32_001, error.code)
       assert_equal 'Task not found', error.message
       assert_nil error.data
     end
@@ -97,7 +97,7 @@ class ProtocolErrorTest < Minitest::Test
 
       error = A2A::Protocol::Error.from_exception(exception)
 
-      assert_equal(-32602, error.code)
+      assert_equal(-32_602, error.code)
       assert_equal 'Invalid parameters', error.message
       assert_equal({ field: 'message' }, error.data)
     end
@@ -107,14 +107,14 @@ class ProtocolErrorTest < Minitest::Test
 
       error = A2A::Protocol::Error.from_exception(exception)
 
-      assert_equal(-32603, error.code)
+      assert_equal(-32_603, error.code)
       assert_equal 'Something went wrong', error.message
       assert_nil error.data
     end
 
     def test_round_trip_serialization
       original = A2A::Protocol::Error.new(
-        code: -32001,
+        code: -32_001,
         message: 'Task not found',
         data: { taskId: 'task-123', reason: 'expired' }
       )
@@ -129,11 +129,11 @@ class ProtocolErrorTest < Minitest::Test
 
     def test_json_rpc_standard_error_codes
       errors = [
-        { code: -32700, message: 'Parse error' },
-        { code: -32600, message: 'Invalid Request' },
-        { code: -32601, message: 'Method not found' },
-        { code: -32602, message: 'Invalid params' },
-        { code: -32603, message: 'Internal error' }
+        { code: -32_700, message: 'Parse error' },
+        { code: -32_600, message: 'Invalid Request' },
+        { code: -32_601, message: 'Method not found' },
+        { code: -32_602, message: 'Invalid params' },
+        { code: -32_603, message: 'Internal error' }
       ]
 
       errors.each do |error_data|
@@ -149,10 +149,10 @@ class ProtocolErrorTest < Minitest::Test
 
     def test_a2a_specific_error_codes
       errors = [
-        { code: -32001, message: 'Task not found' },
-        { code: -32002, message: 'Task not cancelable' },
-        { code: -32003, message: 'Push notification not supported' },
-        { code: -32004, message: 'Unsupported operation' }
+        { code: -32_001, message: 'Task not found' },
+        { code: -32_002, message: 'Task not cancelable' },
+        { code: -32_003, message: 'Push notification not supported' },
+        { code: -32_004, message: 'Unsupported operation' }
       ]
 
       errors.each do |error_data|
@@ -168,7 +168,7 @@ class ProtocolErrorTest < Minitest::Test
 
     def test_complex_error_data
       error = A2A::Protocol::Error.new(
-        code: -32602,
+        code: -32_602,
         message: 'Invalid params',
         data: {
           errors: [

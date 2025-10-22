@@ -30,8 +30,8 @@ module A2A
         }.compact
       end
 
-      def to_json(*args)
-        to_h.to_json(*args)
+      def to_json(*)
+        to_h.to_json(*)
       end
 
       def self.from_hash(hash)
@@ -54,9 +54,9 @@ module A2A
       private
 
       def validate_role(role)
-        unless ROLES.include?(role)
-          raise ArgumentError, "Invalid role: #{role}. Must be one of: #{ROLES.join(', ')}"
-        end
+        return if ROLES.include?(role)
+
+        raise ArgumentError, "Invalid role: #{role}. Must be one of: #{ROLES.join(", ")}"
       end
 
       def normalize_parts(parts)

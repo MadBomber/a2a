@@ -32,8 +32,8 @@ module A2A
         }
       end
 
-      def to_json(*args)
-        to_h.to_json(*args)
+      def to_json(*)
+        to_h.to_json(*)
       end
 
       def self.from_hash(hash)

@@ -55,7 +55,7 @@ class DataPartTest < Minitest::Test
     end
 
     def test_to_h_with_array_data
-      data = ["item1", "item2", "item3"]
+      data = %w[item1 item2 item3]
       part = A2A::Models::DataPart.new(data: data)
       hash = part.to_h
 
@@ -174,8 +174,8 @@ class DataPartTest < Minitest::Test
     end
 
     def test_handles_numeric_data
-      part = A2A::Models::DataPart.new(data: 12345)
-      assert_equal 12345, part.data
+      part = A2A::Models::DataPart.new(data: 12_345)
+      assert_equal 12_345, part.data
     end
 
     def test_handles_boolean_data

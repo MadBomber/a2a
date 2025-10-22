@@ -28,7 +28,7 @@ module A2A
       # Handle tasks/sendSubscribe request (streaming)
       # @param params [Hash] The request parameters
       # @yield [event] Yields task status and artifact update events
-      def handle_send_task_streaming(params, &block)
+      def handle_send_task_streaming(params, &)
         raise NotImplementedError, "Subclasses must implement #handle_send_task_streaming"
       end
 
@@ -62,7 +62,7 @@ module A2A
       # Handle tasks/resubscribe request
       # @param params [Hash] The request parameters
       # @yield [event] Yields task status and artifact update events
-      def handle_resubscribe(params, &block)
+      def handle_resubscribe(params, &)
         raise NotImplementedError, "Subclasses must implement #handle_resubscribe"
       end
     end

@@ -106,20 +106,20 @@ class ServerBaseTest < Minitest::Test
     end
 
     def test_has_all_required_methods
-      required_methods = [
-        :handle_request,
-        :handle_send_task,
-        :handle_send_task_streaming,
-        :handle_get_task,
-        :handle_cancel_task,
-        :handle_set_push_notification,
-        :handle_get_push_notification,
-        :handle_resubscribe
+      required_methods = %i[
+        handle_request
+        handle_send_task
+        handle_send_task_streaming
+        handle_get_task
+        handle_cancel_task
+        handle_set_push_notification
+        handle_get_push_notification
+        handle_resubscribe
       ]
 
       required_methods.each do |method|
         assert_respond_to @server, method,
-          "Server should respond to #{method}"
+                          "Server should respond to #{method}"
       end
     end
 
@@ -127,7 +127,7 @@ class ServerBaseTest < Minitest::Test
       # Create a concrete subclass
       concrete_server_class = Class.new(A2A::Server::Base) do
         def initialize(agent_card)
-          super(agent_card)
+          super
           @tasks = {}
         end
 
@@ -143,7 +143,7 @@ class ServerBaseTest < Minitest::Test
           when 'tasks/cancel'
             { result: handle_cancel_task(params).to_h }
           else
-            { error: { code: -32601, message: 'Method not found' } }
+            { error: { code: -32_601, message: 'Method not found' } }
           end
         end
 
@@ -175,22 +175,22 @@ class ServerBaseTest < Minitest::Test
           task
         end
 
-        def handle_set_push_notification(params)
+        def handle_set_push_notification(_params)
           true
         end
 
-        def handle_get_push_notification(params)
+        def handle_get_push_notification(_params)
           A2A::Models::PushNotificationConfig.new(
             url: 'https://webhook.example.com'
           )
         end
 
-        def handle_send_task_streaming(params, &block)
+        def handle_send_task_streaming(_params)
           yield({ type: 'status', state: 'working' })
           yield({ type: 'status', state: 'completed' })
         end
 
-        def handle_resubscribe(params, &block)
+        def handle_resubscribe(_params)
           yield({ type: 'status', state: 'working' })
         end
       end
@@ -244,35 +244,37 @@ class ServerBaseTest < Minitest::Test
     def test_handles_method_not_found
       concrete_server_class = Class.new(A2A::Server::Base) do
         def handle_request(request)
-          method = request[:method] || request['method']
-          { error: { code: -32601, message: 'Method not found' } }
+          request[:method] || request['method']
+          { error: { code: -32_601, message: 'Method not found' } }
         end
 
-        def handle_send_task(params)
+        def handle_send_task(_params)
           A2A::Models::Task.new(id: 'task-123', status: { state: 'submitted' })
         end
 
-        def handle_get_task(params)
+        def handle_get_task(_params)
           A2A::Models::Task.new(id: 'task-123', status: { state: 'submitted' })
         end
 
-        def handle_cancel_task(params)
+        def handle_cancel_task(_params)
           A2A::Models::Task.new(id: 'task-123', status: { state: 'canceled' })
         end
 
-        def handle_set_push_notification(params); true; end
-        def handle_get_push_notification(params)
+        def handle_set_push_notification(_params) = true
+
+        def handle_get_push_notification(_params)
           A2A::Models::PushNotificationConfig.new(url: 'https://example.com')
         end
-        def handle_send_task_streaming(params, &block); end
-        def handle_resubscribe(params, &block); end
+
+        def handle_send_task_streaming(params, &); end
+        def handle_resubscribe(params, &); end
       end
 
       server = concrete_server_class.new(@agent_card)
       response = server.handle_request(method: 'unknown/method', params: {})
 
       assert response[:error]
-      assert_equal(-32601, response[:error][:code])
+      assert_equal(-32_601, response[:error][:code])
     end
   end
 end

@@ -25,8 +25,8 @@ module A2A
         }.compact
       end
 
-      def to_json(*args)
-        to_h.to_json(*args)
+      def to_json(*)
+        to_h.to_json(*)
       end
 
       def self.from_hash(hash)
@@ -41,13 +41,11 @@ module A2A
       private
 
       def validate_content(bytes, uri)
-        if bytes.nil? && uri.nil?
-          raise ArgumentError, "Either bytes or uri must be provided"
-        end
+        raise ArgumentError, "Either bytes or uri must be provided" if bytes.nil? && uri.nil?
 
-        if bytes && uri
-          raise ArgumentError, "Only one of bytes or uri can be provided, not both"
-        end
+        return unless bytes && uri
+
+        raise ArgumentError, "Only one of bytes or uri can be provided, not both"
       end
     end
   end

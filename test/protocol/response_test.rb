@@ -17,7 +17,7 @@ class ResponseTest < Minitest::Test
     end
 
     def test_initialization_with_error
-      error = { code: -32001, message: 'Task not found' }
+      error = { code: -32_001, message: 'Task not found' }
       response = A2A::Protocol::Response.new(
         id: 'req-123',
         error: error
@@ -39,7 +39,7 @@ class ResponseTest < Minitest::Test
 
       error_response = A2A::Protocol::Response.new(
         id: 'req-123',
-        error: { code: -32001, message: 'Error' }
+        error: { code: -32_001, message: 'Error' }
       )
 
       refute error_response.success?
@@ -58,7 +58,7 @@ class ResponseTest < Minitest::Test
     end
 
     def test_error_factory_method
-      error = { code: -32001, message: 'Task not found' }
+      error = { code: -32_001, message: 'Task not found' }
       response = A2A::Protocol::Response.error(
         id: 'req-123',
         error: error
@@ -85,7 +85,7 @@ class ResponseTest < Minitest::Test
     end
 
     def test_to_h_with_error
-      error = { code: -32001, message: 'Task not found' }
+      error = { code: -32_001, message: 'Task not found' }
       response = A2A::Protocol::Response.new(
         id: 'req-123',
         error: error
@@ -130,13 +130,13 @@ class ResponseTest < Minitest::Test
       hash = {
         'jsonrpc' => '2.0',
         'id' => 'req-123',
-        'error' => { 'code' => -32001, 'message' => 'Error' }
+        'error' => { 'code' => -32_001, 'message' => 'Error' }
       }
 
       response = A2A::Protocol::Response.from_hash(hash)
 
       assert_equal 'req-123', response.id
-      assert_equal({ 'code' => -32001, 'message' => 'Error' }, response.error)
+      assert_equal({ 'code' => -32_001, 'message' => 'Error' }, response.error)
       assert_nil response.result
     end
 
@@ -157,7 +157,7 @@ class ResponseTest < Minitest::Test
     def test_round_trip_serialization_with_error
       original = A2A::Protocol::Response.new(
         id: 'req-123',
-        error: { code: -32001, message: 'Task not found', data: { taskId: 'task-456' } }
+        error: { code: -32_001, message: 'Task not found', data: { taskId: 'task-456' } }
       )
 
       hash = original.to_h

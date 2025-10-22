@@ -253,7 +253,7 @@ class MessageTest < Minitest::Test
 
   describe "edge cases" do
     def test_handles_empty_parts_array
-      text_part = A2A::Models::TextPart.new(text: "test")
+      A2A::Models::TextPart.new(text: "test")
       message = A2A::Models::Message.new(role: "user", parts: [])
 
       assert_equal 0, message.parts.length

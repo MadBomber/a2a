@@ -30,8 +30,8 @@ class AgentCardTest < Minitest::Test
         documentation_url: "https://docs.example.com",
         capabilities: { streaming: true, push_notifications: true },
         authentication: { schemes: ["bearer"] },
-        default_input_modes: ["text", "file"],
-        default_output_modes: ["text", "data"],
+        default_input_modes: %w[text file],
+        default_output_modes: %w[text data],
         skills: [{ id: "skill-1", name: "Skill 1" }]
       )
 
@@ -42,8 +42,8 @@ class AgentCardTest < Minitest::Test
       assert_equal "https://docs.example.com", card.documentation_url
       assert card.capabilities.streaming?
       assert_kind_of A2A::Models::AgentAuthentication, card.authentication
-      assert_equal ["text", "file"], card.default_input_modes
-      assert_equal ["text", "data"], card.default_output_modes
+      assert_equal %w[text file], card.default_input_modes
+      assert_equal %w[text data], card.default_output_modes
       assert_equal 1, card.skills.length
     end
 
@@ -163,8 +163,8 @@ class AgentCardTest < Minitest::Test
         documentation_url: "https://docs.complete.com",
         capabilities: { streaming: true },
         authentication: { schemes: ["bearer"] },
-        default_input_modes: ["text", "file"],
-        default_output_modes: ["text", "data"],
+        default_input_modes: %w[text file],
+        default_output_modes: %w[text data],
         skills: [{ id: "skill-1", name: "Test Skill" }]
       )
       hash = card.to_h
@@ -177,8 +177,8 @@ class AgentCardTest < Minitest::Test
       assert_equal "https://docs.complete.com", hash[:documentationUrl]
       assert_kind_of Hash, hash[:capabilities]
       assert_kind_of Hash, hash[:authentication]
-      assert_equal ["text", "file"], hash[:defaultInputModes]
-      assert_equal ["text", "data"], hash[:defaultOutputModes]
+      assert_equal %w[text file], hash[:defaultInputModes]
+      assert_equal %w[text data], hash[:defaultOutputModes]
       assert_equal 1, hash[:skills].length
     end
 
@@ -260,15 +260,15 @@ class AgentCardTest < Minitest::Test
         version: "1.0",
         documentationUrl: "https://docs.test.com",
         capabilities: {},
-        defaultInputModes: ["text", "file"],
-        defaultOutputModes: ["text", "data"],
+        defaultInputModes: %w[text file],
+        defaultOutputModes: %w[text data],
         skills: []
       }
       card = A2A::Models::AgentCard.from_hash(hash)
 
       assert_equal "https://docs.test.com", card.documentation_url
-      assert_equal ["text", "file"], card.default_input_modes
-      assert_equal ["text", "data"], card.default_output_modes
+      assert_equal %w[text file], card.default_input_modes
+      assert_equal %w[text data], card.default_output_modes
     end
 
     def test_from_hash_with_snake_case_keys
@@ -303,7 +303,7 @@ class AgentCardTest < Minitest::Test
           pushNotifications: true
         },
         authentication: {
-          schemes: ["bearer", "apikey"]
+          schemes: %w[bearer apikey]
         },
         skills: [
           { id: "s1", name: "Skill 1" },
@@ -348,8 +348,8 @@ class AgentCardTest < Minitest::Test
         documentation_url: "https://docs.com",
         capabilities: { streaming: true, push_notifications: true },
         authentication: { schemes: ["bearer"] },
-        default_input_modes: ["text", "file"],
-        default_output_modes: ["text", "data"],
+        default_input_modes: %w[text file],
+        default_output_modes: %w[text data],
         skills: [
           { id: "s1", name: "Skill 1", description: "First skill" }
         ]
@@ -412,8 +412,8 @@ class AgentCardTest < Minitest::Test
         url: "https://multimodal.example.com/a2a",
         version: "3.0.0",
         capabilities: { streaming: true, push_notifications: true },
-        default_input_modes: ["text", "file", "data"],
-        default_output_modes: ["text", "file", "data"],
+        default_input_modes: %w[text file data],
+        default_output_modes: %w[text file data],
         skills: [
           { id: "image-analysis", name: "Image Analysis" },
           { id: "data-processing", name: "Data Processing" }
@@ -442,13 +442,13 @@ class AgentCardTest < Minitest::Test
           state_transition_history: true
         },
         authentication: {
-          schemes: ["bearer", "oauth2"]
+          schemes: %w[bearer oauth2]
         },
         skills: [
           {
             id: "enterprise-search",
             name: "Enterprise Search",
-            tags: ["search", "enterprise"]
+            tags: %w[search enterprise]
           }
         ]
       )

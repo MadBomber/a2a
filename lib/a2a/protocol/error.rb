@@ -20,8 +20,8 @@ module A2A
         }.compact
       end
 
-      def to_json(*args)
-        to_h.to_json(*args)
+      def to_json(*)
+        to_h.to_json(*)
       end
 
       def self.from_hash(hash)
@@ -38,7 +38,7 @@ module A2A
         when A2A::JSONRPCError
           new(code: exception.code, message: exception.message, data: exception.data)
         else
-          new(code: -32603, message: exception.message)
+          new(code: -32_603, message: exception.message)
         end
       end
     end

@@ -106,19 +106,19 @@ class ClientBaseTest < Minitest::Test
     end
 
     def test_has_all_required_methods
-      required_methods = [
-        :discover,
-        :send_task,
-        :send_task_streaming,
-        :get_task,
-        :cancel_task,
-        :set_push_notification,
-        :get_push_notification
+      required_methods = %i[
+        discover
+        send_task
+        send_task_streaming
+        get_task
+        cancel_task
+        set_push_notification
+        get_push_notification
       ]
 
       required_methods.each do |method|
         assert_respond_to @client, method,
-          "Client should respond to #{method}"
+                          "Client should respond to #{method}"
       end
     end
 
@@ -167,7 +167,7 @@ class ClientBaseTest < Minitest::Test
           )
         end
 
-        def send_task_streaming(task_id:, message:, session_id: nil, &block)
+        def send_task_streaming(task_id:, message:, session_id: nil)
           yield({ type: 'status', data: { state: 'working' } })
           yield({ type: 'completed', data: { state: 'completed' } })
         end

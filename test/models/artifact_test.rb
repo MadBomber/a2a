@@ -209,7 +209,7 @@ class ArtifactTest < Minitest::Test
       assert_equal "Test output", artifact.description
       assert_equal 1, artifact.parts.length
       assert_equal 2, artifact.index
-      # Note: false values become nil after compact in to_h/from_hash round-trip
+      # NOTE: false values become nil after compact in to_h/from_hash round-trip
       assert_nil artifact.append
       assert_equal true, artifact.last_chunk
       assert_equal({ "key" => "value" }, artifact.metadata)
@@ -297,7 +297,7 @@ class ArtifactTest < Minitest::Test
       assert_equal original.parts.length, restored.parts.length
       assert_equal original.index, restored.index
       assert_equal original.append, restored.append
-      # Note: false becomes nil after compact in to_h
+      # NOTE: false becomes nil after compact in to_h
       assert_nil restored.last_chunk
       assert_equal original.metadata, restored.metadata
     end
@@ -312,9 +312,9 @@ class ArtifactTest < Minitest::Test
 
     def test_handles_large_index
       parts = [A2A::Models::TextPart.new(text: "Output")]
-      artifact = A2A::Models::Artifact.new(parts: parts, index: 999999)
+      artifact = A2A::Models::Artifact.new(parts: parts, index: 999_999)
 
-      assert_equal 999999, artifact.index
+      assert_equal 999_999, artifact.index
     end
 
     def test_handles_parts_with_metadata
@@ -434,7 +434,7 @@ class ArtifactTest < Minitest::Test
             data: {
               "sentiment" => "positive",
               "confidence" => 0.87,
-              "keywords" => ["AI", "automation", "efficiency"]
+              "keywords" => %w[AI automation efficiency]
             }
           )
         ]

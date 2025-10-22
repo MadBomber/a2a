@@ -28,12 +28,12 @@ class ErrorTest < Minitest::Test
     def test_initialization_with_all_fields
       error = A2A::JSONRPCError.new(
         'Test error',
-        code: -32001,
+        code: -32_001,
         data: { extra: 'info' }
       )
 
       assert_equal 'Test error', error.message
-      assert_equal(-32001, error.code)
+      assert_equal(-32_001, error.code)
       assert_equal({ extra: 'info' }, error.data)
     end
 
@@ -46,13 +46,11 @@ class ErrorTest < Minitest::Test
     end
 
     def test_can_be_raised_with_code_and_data
-      begin
-        raise A2A::JSONRPCError.new('Error', code: -32000, data: { reason: 'test' })
-      rescue A2A::JSONRPCError => e
-        assert_equal 'Error', e.message
-        assert_equal(-32000, e.code)
-        assert_equal({ reason: 'test' }, e.data)
-      end
+      raise A2A::JSONRPCError.new('Error', code: -32_000, data: { reason: 'test' })
+    rescue A2A::JSONRPCError => e
+      assert_equal 'Error', e.message
+      assert_equal(-32_000, e.code)
+      assert_equal({ reason: 'test' }, e.data)
     end
   end
 
@@ -65,7 +63,7 @@ class ErrorTest < Minitest::Test
       error = A2A::JSONParseError.new
 
       assert_equal 'Invalid JSON payload', error.message
-      assert_equal(-32700, error.code)
+      assert_equal(-32_700, error.code)
       assert_nil error.data
     end
 
@@ -73,16 +71,14 @@ class ErrorTest < Minitest::Test
       error = A2A::JSONParseError.new(data: { position: 42 })
 
       assert_equal 'Invalid JSON payload', error.message
-      assert_equal(-32700, error.code)
+      assert_equal(-32_700, error.code)
       assert_equal({ position: 42 }, error.data)
     end
 
     def test_can_be_rescued_as_jsonrpc_error
-      begin
-        raise A2A::JSONParseError.new
-      rescue A2A::JSONRPCError => e
-        assert_equal(-32700, e.code)
-      end
+      raise A2A::JSONParseError
+    rescue A2A::JSONRPCError => e
+      assert_equal(-32_700, e.code)
     end
   end
 
@@ -91,7 +87,7 @@ class ErrorTest < Minitest::Test
       error = A2A::InvalidRequestError.new
 
       assert_equal 'Request payload validation error', error.message
-      assert_equal(-32600, error.code)
+      assert_equal(-32_600, error.code)
     end
 
     def test_accepts_optional_data
@@ -106,7 +102,7 @@ class ErrorTest < Minitest::Test
       error = A2A::MethodNotFoundError.new
 
       assert_equal 'Method not found', error.message
-      assert_equal(-32601, error.code)
+      assert_equal(-32_601, error.code)
     end
 
     def test_accepts_optional_data
@@ -121,7 +117,7 @@ class ErrorTest < Minitest::Test
       error = A2A::InvalidParamsError.new
 
       assert_equal 'Invalid parameters', error.message
-      assert_equal(-32602, error.code)
+      assert_equal(-32_602, error.code)
     end
 
     def test_accepts_optional_data
@@ -142,7 +138,7 @@ class ErrorTest < Minitest::Test
       error = A2A::InternalError.new
 
       assert_equal 'Internal error', error.message
-      assert_equal(-32603, error.code)
+      assert_equal(-32_603, error.code)
     end
 
     def test_accepts_optional_data
@@ -157,7 +153,7 @@ class ErrorTest < Minitest::Test
       error = A2A::TaskNotFoundError.new
 
       assert_equal 'Task not found', error.message
-      assert_equal(-32001, error.code)
+      assert_equal(-32_001, error.code)
       assert_nil error.data
     end
 
@@ -167,7 +163,7 @@ class ErrorTest < Minitest::Test
 
     def test_can_be_raised_and_rescued
       assert_raises(A2A::TaskNotFoundError) do
-        raise A2A::TaskNotFoundError.new
+        raise A2A::TaskNotFoundError
       end
     end
   end
@@ -177,7 +173,7 @@ class ErrorTest < Minitest::Test
       error = A2A::TaskNotCancelableError.new
 
       assert_equal 'Task cannot be canceled', error.message
-      assert_equal(-32002, error.code)
+      assert_equal(-32_002, error.code)
     end
   end
 
@@ -186,7 +182,7 @@ class ErrorTest < Minitest::Test
       error = A2A::PushNotificationNotSupportedError.new
 
       assert_equal 'Push Notification is not supported', error.message
-      assert_equal(-32003, error.code)
+      assert_equal(-32_003, error.code)
     end
   end
 
@@ -195,7 +191,7 @@ class ErrorTest < Minitest::Test
       error = A2A::UnsupportedOperationError.new
 
       assert_equal 'This operation is not supported', error.message
-      assert_equal(-32004, error.code)
+      assert_equal(-32_004, error.code)
     end
   end
 
@@ -214,11 +210,9 @@ class ErrorTest < Minitest::Test
       ]
 
       errors.each do |error|
-        begin
-          raise error
-        rescue A2A::Error => e
-          assert_instance_of error.class, e
-        end
+        raise error
+      rescue A2A::Error => e
+        assert_instance_of error.class, e
       end
     end
 
@@ -239,40 +233,40 @@ class ErrorTest < Minitest::Test
     end
 
     def test_json_rpc_standard_codes
-      assert_equal(-32700, A2A::JSONParseError.new.code)
-      assert_equal(-32600, A2A::InvalidRequestError.new.code)
-      assert_equal(-32601, A2A::MethodNotFoundError.new.code)
-      assert_equal(-32602, A2A::InvalidParamsError.new.code)
-      assert_equal(-32603, A2A::InternalError.new.code)
+      assert_equal(-32_700, A2A::JSONParseError.new.code)
+      assert_equal(-32_600, A2A::InvalidRequestError.new.code)
+      assert_equal(-32_601, A2A::MethodNotFoundError.new.code)
+      assert_equal(-32_602, A2A::InvalidParamsError.new.code)
+      assert_equal(-32_603, A2A::InternalError.new.code)
     end
 
     def test_a2a_specific_codes
-      assert_equal(-32001, A2A::TaskNotFoundError.new.code)
-      assert_equal(-32002, A2A::TaskNotCancelableError.new.code)
-      assert_equal(-32003, A2A::PushNotificationNotSupportedError.new.code)
-      assert_equal(-32004, A2A::UnsupportedOperationError.new.code)
+      assert_equal(-32_001, A2A::TaskNotFoundError.new.code)
+      assert_equal(-32_002, A2A::TaskNotCancelableError.new.code)
+      assert_equal(-32_003, A2A::PushNotificationNotSupportedError.new.code)
+      assert_equal(-32_004, A2A::UnsupportedOperationError.new.code)
     end
 
     def test_error_rescue_by_specificity
       # Can rescue specific error type
       begin
-        raise A2A::TaskNotFoundError.new
+        raise A2A::TaskNotFoundError
       rescue A2A::TaskNotFoundError => e
-        assert_equal(-32001, e.code)
+        assert_equal(-32_001, e.code)
       rescue A2A::JSONRPCError
         flunk 'Should have been caught by more specific rescue'
       end
 
       # Can rescue as JSONRPCError
       begin
-        raise A2A::TaskNotFoundError.new
+        raise A2A::TaskNotFoundError
       rescue A2A::JSONRPCError => e
-        assert_equal(-32001, e.code)
+        assert_equal(-32_001, e.code)
       end
 
       # Can rescue as base Error
       begin
-        raise A2A::TaskNotFoundError.new
+        raise A2A::TaskNotFoundError
       rescue A2A::Error => e
         assert_equal 'Task not found', e.message
       end
@@ -313,7 +307,7 @@ class ErrorTest < Minitest::Test
       )
 
       refute response.success?
-      assert_equal(-32001, response.error[:code])
+      assert_equal(-32_001, response.error[:code])
       assert_equal 'Task not found', response.error[:message]
     end
   end

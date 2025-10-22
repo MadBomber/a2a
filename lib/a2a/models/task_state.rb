@@ -71,7 +71,7 @@ module A2A
 
       def validate_state(value)
         unless STATES.include?(value)
-          raise ArgumentError, "Invalid task state: #{value}. Must be one of: #{STATES.join(', ')}"
+          raise ArgumentError, "Invalid task state: #{value}. Must be one of: #{STATES.join(", ")}"
         end
 
         value

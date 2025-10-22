@@ -13,11 +13,11 @@ class AgentAuthenticationTest < Minitest::Test
 
     def test_creates_agent_authentication_with_schemes_and_credentials
       auth = A2A::Models::AgentAuthentication.new(
-        schemes: ["bearer", "apikey"],
+        schemes: %w[bearer apikey],
         credentials: { "token" => "secret123" }
       )
 
-      assert_equal ["bearer", "apikey"], auth.schemes
+      assert_equal %w[bearer apikey], auth.schemes
       assert_equal({ "token" => "secret123" }, auth.credentials)
     end
 
@@ -39,7 +39,7 @@ class AgentAuthenticationTest < Minitest::Test
 
     def test_creates_agent_authentication_with_multiple_schemes
       auth = A2A::Models::AgentAuthentication.new(
-        schemes: ["bearer", "basic", "apikey"]
+        schemes: %w[bearer basic apikey]
       )
 
       assert_equal 3, auth.schemes.length
@@ -83,7 +83,7 @@ class AgentAuthenticationTest < Minitest::Test
         credentials: {
           "client_id" => "abc123",
           "client_secret" => "secret",
-          "scope" => ["read", "write"]
+          "scope" => %w[read write]
         }
       )
       hash = auth.to_h
@@ -148,7 +148,7 @@ class AgentAuthenticationTest < Minitest::Test
   describe "serialization round-trip" do
     def test_round_trip_with_schemes_only
       original = A2A::Models::AgentAuthentication.new(
-        schemes: ["bearer", "apikey"]
+        schemes: %w[bearer apikey]
       )
 
       hash = original.to_h
@@ -163,7 +163,7 @@ class AgentAuthenticationTest < Minitest::Test
         schemes: ["oauth2"],
         credentials: {
           "client_id" => "test123",
-          "scope" => ["read", "write"]
+          "scope" => %w[read write]
         }
       )
 
@@ -183,7 +183,7 @@ class AgentAuthenticationTest < Minitest::Test
     end
 
     def test_handles_many_schemes
-      many_schemes = ["bearer", "basic", "apikey", "oauth2", "digest", "custom"]
+      many_schemes = %w[bearer basic apikey oauth2 digest custom]
       auth = A2A::Models::AgentAuthentication.new(schemes: many_schemes)
 
       assert_equal 6, auth.schemes.length
@@ -204,7 +204,7 @@ class AgentAuthenticationTest < Minitest::Test
         credentials: {
           "oauth" => {
             "provider" => "google",
-            "scopes" => ["email", "profile"]
+            "scopes" => %w[email profile]
           }
         }
       )
@@ -213,13 +213,13 @@ class AgentAuthenticationTest < Minitest::Test
     end
 
     def test_handles_scheme_name_variations
-      schemes = [
-        "bearer",
-        "Bearer",
-        "BEARER",
-        "api-key",
-        "API_KEY",
-        "custom-scheme-v2"
+      schemes = %w[
+        bearer
+        Bearer
+        BEARER
+        api-key
+        API_KEY
+        custom-scheme-v2
       ]
       auth = A2A::Models::AgentAuthentication.new(schemes: schemes)
 
@@ -261,7 +261,7 @@ class AgentAuthenticationTest < Minitest::Test
         credentials: {
           "authorization_endpoint" => "https://oauth.example.com/authorize",
           "token_endpoint" => "https://oauth.example.com/token",
-          "scopes" => ["read", "write"]
+          "scopes" => %w[read write]
         }
       )
 
@@ -272,7 +272,7 @@ class AgentAuthenticationTest < Minitest::Test
 
     def test_represents_multiple_auth_schemes
       auth = A2A::Models::AgentAuthentication.new(
-        schemes: ["bearer", "apikey", "basic"]
+        schemes: %w[bearer apikey basic]
       )
 
       assert_equal 3, auth.schemes.length

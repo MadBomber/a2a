@@ -227,7 +227,7 @@ class FileContentTest < Minitest::Test
     end
 
     def test_handles_long_file_names
-      long_name = "a" * 255 + ".txt"
+      long_name = "#{"a" * 255}.txt"
       content = A2A::Models::FileContent.new(name: long_name, bytes: "data")
       assert_equal long_name, content.name
     end
