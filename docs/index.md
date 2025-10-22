@@ -1,10 +1,10 @@
-# A2A - Agent2Agent Protocol
+# A2A - Agent to Agent Protocol
 
 <table border="0">
 <tr>
 <td width="30%" valign="top">
   <div align="center">
-      <strong>Agent Communication Protocol</strong>
+      <img src="docs/assets/images/the_handshake.png" alt="The Handshake" width="600">
   </div>
 </td>
 <td width="70%" valign="top">
