@@ -1,0 +1,3099 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Ruby implementation of the Agent2Agent protocol for AI agent communication">
+      
+      
+        <meta name="author" content="Dewayne VanHoozer">
+      
+      
+        <link rel="canonical" href="https://madbomber.github.io/a2a/architecture/flow/">
+      
+      
+        <link rel="prev" href="../design/">
+      
+      
+        <link rel="next" href="../../examples/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Protocol Flow - A2A - Agent2Agent Protocol</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#a2a-ruby-gem-protocol-flow-and-sequence-diagrams" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="A2A - Agent2Agent Protocol" class="md-header__button md-logo" aria-label="A2A - Agent2Agent Protocol" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            A2A - Agent2Agent Protocol
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Protocol Flow
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/madbomber/a2a" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    madbomber/a2a
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../installation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Installation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../examples/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../advanced/streaming/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Advanced
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../protocol-spec/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Protocol Specification
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="A2A - Agent2Agent Protocol" class="md-nav__button md-logo" aria-label="A2A - Agent2Agent Protocol" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    A2A - Agent2Agent Protocol
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/madbomber/a2a" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    madbomber/a2a
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../guides/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Guides
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/agent-cards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Creating Agent Cards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Working with Tasks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/messages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Messages and Parts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/artifacts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Handling Artifacts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../api/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Protocol
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gem-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gem Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Design Principles
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Protocol Flow
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Protocol Flow
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protocol-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protocol Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protocol Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-protocol-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Protocol Methods
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discovery-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discovery Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Discovery Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent-discovery-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent Discovery Sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovery-implementation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discovery Implementation Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Lifecycle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task State Machine
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-lifecycle-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Lifecycle Sequence
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synchronous-task-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Synchronous Task Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Synchronous Task Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#synchronous-taskssend-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Synchronous tasks/send Sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronous-flow-with-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Synchronous Flow with Error
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streaming-task-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming Task Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Streaming Task Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streaming-taskssendsubscribe-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming tasks/sendSubscribe Sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sse-event-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSE Event Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-turn-conversation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Turn Conversation Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-Turn Conversation Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-turn-conversation-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Turn Conversation Sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-context-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Session Context Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling Flows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Handling Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#protocol-error-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protocol Error Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-error-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application Error Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-response-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Response Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#push-notification-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Push Notification Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Push Notification Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#push-notification-setup-and-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Push Notification Setup and Delivery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhook-retry-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Webhook Retry Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-cancellation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Cancellation Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task Cancellation Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cancellation-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cancellation Sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cancellation-edge-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cancellation Edge Cases
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-transitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Transitions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State Transitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#valid-state-transition-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Valid State Transition Diagram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-transition-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Transition Rules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-interactions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Interactions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Interactions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complete-requestresponse-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Request/Response Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-interaction-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Interaction Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protocol-method-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protocol Method Summary
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protocol Method Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#all-protocol-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      All Protocol Methods
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Documentation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../examples/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Building a Client
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Building a Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Advanced
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced/streaming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Streaming Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced/push-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Push Notifications
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced/conversations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Multi-turn Conversations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../protocol-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Protocol Specification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protocol-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protocol Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protocol Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-protocol-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Protocol Methods
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discovery-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discovery Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Discovery Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent-discovery-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent Discovery Sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovery-implementation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discovery Implementation Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Lifecycle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task State Machine
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-lifecycle-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Lifecycle Sequence
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synchronous-task-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Synchronous Task Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Synchronous Task Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#synchronous-taskssend-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Synchronous tasks/send Sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronous-flow-with-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Synchronous Flow with Error
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streaming-task-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming Task Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Streaming Task Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streaming-taskssendsubscribe-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming tasks/sendSubscribe Sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sse-event-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSE Event Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-turn-conversation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Turn Conversation Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-Turn Conversation Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-turn-conversation-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Turn Conversation Sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-context-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Session Context Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling Flows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Handling Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#protocol-error-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protocol Error Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-error-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application Error Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-response-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Response Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#push-notification-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Push Notification Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Push Notification Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#push-notification-setup-and-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Push Notification Setup and Delivery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhook-retry-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Webhook Retry Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-cancellation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Cancellation Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task Cancellation Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cancellation-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cancellation Sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cancellation-edge-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cancellation Edge Cases
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-transitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Transitions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State Transitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#valid-state-transition-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Valid State Transition Diagram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-transition-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Transition Rules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-interactions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Interactions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Interactions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complete-requestresponse-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Request/Response Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-interaction-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Interaction Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protocol-method-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protocol Method Summary
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protocol Method Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#all-protocol-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      All Protocol Methods
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Documentation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/madbomber/a2a/edit/main/docs/architecture/flow.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/madbomber/a2a/raw/main/docs/architecture/flow.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="a2a-ruby-gem-protocol-flow-and-sequence-diagrams">A2A Ruby Gem - Protocol Flow and Sequence Diagrams<a class="headerlink" href="#a2a-ruby-gem-protocol-flow-and-sequence-diagrams" title="Permanent link">&para;</a></h1>
+<p>This document provides detailed sequence diagrams and flow charts illustrating how the A2A protocol operates in various scenarios.</p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#protocol-overview">Protocol Overview</a></li>
+<li><a href="#discovery-flow">Discovery Flow</a></li>
+<li><a href="#task-lifecycle">Task Lifecycle</a></li>
+<li><a href="#synchronous-task-flow">Synchronous Task Flow</a></li>
+<li><a href="#streaming-task-flow">Streaming Task Flow</a></li>
+<li><a href="#multi-turn-conversation-flow">Multi-Turn Conversation Flow</a></li>
+<li><a href="#error-handling-flows">Error Handling Flows</a></li>
+<li><a href="#push-notification-flow">Push Notification Flow</a></li>
+<li><a href="#task-cancellation-flow">Task Cancellation Flow</a></li>
+<li><a href="#state-transitions">State Transitions</a></li>
+<li><a href="#component-interactions">Component Interactions</a></li>
+</ul>
+<h2 id="protocol-overview">Protocol Overview<a class="headerlink" href="#protocol-overview" title="Permanent link">&para;</a></h2>
+<p>The A2A protocol is built on JSON-RPC 2.0 and uses HTTP as the transport layer. The protocol defines several methods for task management and communication between clients and agents.</p>
+<h3 id="core-protocol-methods">Core Protocol Methods<a class="headerlink" href="#core-protocol-methods" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+    subgraph "Discovery"
+        D[GET /.well-known/agent.json]
+    end
+
+    subgraph "Task Management"
+        TS[tasks/send]
+        TSS[tasks/sendSubscribe]
+        TG[tasks/get]
+        TC[tasks/cancel]
+        TR[tasks/resubscribe]
+    end
+
+    subgraph "Push Notifications"
+        PNS[tasks/pushNotification/set]
+        PNG[tasks/pushNotification/get]
+    end
+
+    style D fill:#d1ecf1
+    style TS fill:#d4edda
+    style TSS fill:#fff3cd
+    style TC fill:#f8d7da</code></pre>
+<h2 id="discovery-flow">Discovery Flow<a class="headerlink" href="#discovery-flow" title="Permanent link">&para;</a></h2>
+<p>Before a client can interact with an agent, it must discover the agent's capabilities through the AgentCard.</p>
+<h3 id="agent-discovery-sequence">Agent Discovery Sequence<a class="headerlink" href="#agent-discovery-sequence" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Client as A2A Client
+    participant HTTP as HTTP Transport
+    participant Server as A2A Server
+    participant FS as File System
+
+    Note over Client: Discovery Phase
+    Client-&gt;&gt;HTTP: GET /.well-known/agent.json
+    HTTP-&gt;&gt;Server: HTTP GET Request
+
+    Server-&gt;&gt;FS: Read agent.json
+    FS--&gt;&gt;Server: AgentCard data
+
+    Server--&gt;&gt;HTTP: 200 OK + AgentCard JSON
+    HTTP--&gt;&gt;Client: AgentCard Response
+
+    Note over Client: Parse AgentCard
+    Client-&gt;&gt;Client: AgentCard.from_hash(json)
+    Client-&gt;&gt;Client: Validate capabilities
+    Client-&gt;&gt;Client: Store agent metadata
+
+    Note over Client: Ready to send tasks</code></pre>
+<h3 id="discovery-implementation-flow">Discovery Implementation Flow<a class="headerlink" href="#discovery-implementation-flow" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+    Start[Client.discover] --&gt; BuildURL[Build well-known URL]
+    BuildURL --&gt; HTTPGet[HTTP GET Request]
+    HTTPGet --&gt; ParseJSON[Parse JSON Response]
+    ParseJSON --&gt; CreateCard[AgentCard.from_hash]
+    CreateCard --&gt; ValidateCap[Validate Capabilities]
+    ValidateCap --&gt; StoreCard[Store agent_card]
+    StoreCard --&gt; End[Return AgentCard]
+
+    style Start fill:#e1f5ff
+    style CreateCard fill:#d1ecf1
+    style End fill:#d4edda</code></pre>
+<h2 id="task-lifecycle">Task Lifecycle<a class="headerlink" href="#task-lifecycle" title="Permanent link">&para;</a></h2>
+<p>Tasks progress through a series of states from submission to completion.</p>
+<h3 id="task-state-machine">Task State Machine<a class="headerlink" href="#task-state-machine" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; submitted: Client sends task
+
+    submitted --&gt; working: Agent starts processing
+    submitted --&gt; failed: Validation error
+    submitted --&gt; canceled: Client cancels
+
+    working --&gt; input-required: Agent needs more info
+    working --&gt; completed: Processing successful
+    working --&gt; failed: Processing error
+    working --&gt; canceled: Client cancels
+
+    input-required --&gt; working: Client provides input
+    input-required --&gt; canceled: Client cancels
+    input-required --&gt; failed: Timeout/error
+
+    completed --&gt; [*]: Terminal state
+    failed --&gt; [*]: Terminal state
+    canceled --&gt; [*]: Terminal state
+    unknown --&gt; [*]: Terminal state
+
+    note right of completed
+        Terminal States:
+        - completed
+        - failed
+        - canceled
+    end note</code></pre>
+<h3 id="task-lifecycle-sequence">Task Lifecycle Sequence<a class="headerlink" href="#task-lifecycle-sequence" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Client
+    participant Server
+    participant TaskStore
+    participant Logic
+
+    Client-&gt;&gt;Server: tasks/send
+    Note over Server: Create Task (submitted)
+    Server-&gt;&gt;TaskStore: Store task
+
+    Server-&gt;&gt;Logic: Process task
+    Note over Logic: Update state to working
+    Server-&gt;&gt;TaskStore: Update task state
+
+    alt Success
+        Logic--&gt;&gt;Server: Results
+        Note over Server: Update state to completed
+        Server-&gt;&gt;TaskStore: Update with artifacts
+        Server--&gt;&gt;Client: Task (completed)
+    else Needs Input
+        Logic--&gt;&gt;Server: Request input
+        Note over Server: Update state to input-required
+        Server--&gt;&gt;Client: Task (input-required)
+        Client-&gt;&gt;Server: tasks/send (same task ID)
+        Server-&gt;&gt;Logic: Continue processing
+    else Error
+        Logic--&gt;&gt;Server: Error
+        Note over Server: Update state to failed
+        Server--&gt;&gt;Client: Task (failed)
+    end</code></pre>
+<h2 id="synchronous-task-flow">Synchronous Task Flow<a class="headerlink" href="#synchronous-task-flow" title="Permanent link">&para;</a></h2>
+<p>The simplest interaction pattern where the client sends a task and waits for completion.</p>
+<h3 id="synchronous-taskssend-sequence">Synchronous tasks/send Sequence<a class="headerlink" href="#synchronous-taskssend-sequence" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant App as Application
+    participant Client as A2A Client
+    participant Models as Models Layer
+    participant Protocol as Protocol Layer
+    participant Network as HTTP/Network
+    participant Server as A2A Server
+
+    Note over App,Server: Synchronous Task Execution
+
+    App-&gt;&gt;Models: Create Message
+    activate Models
+    Models--&gt;&gt;App: Message object
+    deactivate Models
+
+    App-&gt;&gt;Client: send_task(task_id, message)
+    activate Client
+
+    Client-&gt;&gt;Models: Create Task (submitted)
+    Client-&gt;&gt;Protocol: Create JSON-RPC Request
+    activate Protocol
+    Protocol--&gt;&gt;Client: Request object
+    deactivate Protocol
+
+    Client-&gt;&gt;Network: POST /a2a endpoint
+    activate Network
+    Network-&gt;&gt;Server: HTTP Request
+    activate Server
+
+    Server-&gt;&gt;Protocol: Parse JSON-RPC
+    Protocol--&gt;&gt;Server: Request object
+
+    Server-&gt;&gt;Server: Route to handle_send_task
+    Server-&gt;&gt;Server: Process task
+    Note over Server: Task state: working
+
+    Server-&gt;&gt;Server: Execute business logic
+    Note over Server: Task state: completed
+
+    Server-&gt;&gt;Models: Create Task result
+    Server-&gt;&gt;Protocol: Create JSON-RPC Response
+    Protocol--&gt;&gt;Server: Response object
+
+    Server--&gt;&gt;Network: HTTP 200 + Task JSON
+    deactivate Server
+    Network--&gt;&gt;Client: HTTP Response
+    deactivate Network
+
+    Client-&gt;&gt;Protocol: Parse response
+    Protocol-&gt;&gt;Models: Task.from_hash
+    activate Models
+    Models--&gt;&gt;Protocol: Task object
+    deactivate Models
+    Protocol--&gt;&gt;Client: Task
+
+    Client--&gt;&gt;App: Task (completed)
+    deactivate Client</code></pre>
+<h3 id="synchronous-flow-with-error">Synchronous Flow with Error<a class="headerlink" href="#synchronous-flow-with-error" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Client
+    participant Server
+    participant Logic
+
+    Client-&gt;&gt;Server: tasks/send
+    activate Server
+    Server-&gt;&gt;Logic: Process task
+    activate Logic
+
+    Logic--&gt;&gt;Logic: Processing fails
+    Logic--&gt;&gt;Server: Raise error
+    deactivate Logic
+
+    Server-&gt;&gt;Server: Create error response
+    Server--&gt;&gt;Client: JSON-RPC Error
+    deactivate Server
+
+    Note over Client: Handle error
+    Client-&gt;&gt;Client: Raise A2A::Error</code></pre>
+<h2 id="streaming-task-flow">Streaming Task Flow<a class="headerlink" href="#streaming-task-flow" title="Permanent link">&para;</a></h2>
+<p>For long-running tasks, streaming provides real-time updates via Server-Sent Events (SSE).</p>
+<h3 id="streaming-taskssendsubscribe-sequence">Streaming tasks/sendSubscribe Sequence<a class="headerlink" href="#streaming-taskssendsubscribe-sequence" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Client as A2A Client
+    participant HTTP as HTTP/SSE
+    participant Server as A2A Server
+    participant Logic as Business Logic
+
+    Note over Client,Server: Streaming Task Execution
+
+    Client-&gt;&gt;HTTP: POST tasks/sendSubscribe
+    activate HTTP
+    HTTP-&gt;&gt;Server: HTTP Request
+    activate Server
+
+    Note over Server: Accept streaming request
+    Server--&gt;&gt;HTTP: HTTP 200 + SSE stream
+    HTTP--&gt;&gt;Client: SSE Connection established
+
+    Server-&gt;&gt;Logic: Start async processing
+    activate Logic
+
+    Note over Server: Task state: submitted
+    Server-&gt;&gt;HTTP: SSE: TaskStatusUpdateEvent
+    HTTP-&gt;&gt;Client: Event: status=submitted
+
+    Note over Logic: Begin processing
+    Logic--&gt;&gt;Server: Update: working
+    Note over Server: Task state: working
+    Server-&gt;&gt;HTTP: SSE: TaskStatusUpdateEvent
+    HTTP-&gt;&gt;Client: Event: status=working
+
+    Logic--&gt;&gt;Logic: Generate partial results
+    Logic--&gt;&gt;Server: Artifact update
+    Server-&gt;&gt;HTTP: SSE: TaskArtifactUpdateEvent
+    HTTP-&gt;&gt;Client: Event: artifact data
+
+    Logic--&gt;&gt;Logic: More processing
+    Logic--&gt;&gt;Server: More artifact updates
+    Server-&gt;&gt;HTTP: SSE: TaskArtifactUpdateEvent
+    HTTP-&gt;&gt;Client: Event: more artifacts
+
+    Logic--&gt;&gt;Server: Processing complete
+    deactivate Logic
+    Note over Server: Task state: completed
+    Server-&gt;&gt;HTTP: SSE: TaskStatusUpdateEvent
+    HTTP-&gt;&gt;Client: Event: status=completed
+
+    Server-&gt;&gt;HTTP: Close SSE stream
+    deactivate Server
+    HTTP-&gt;&gt;Client: Connection closed
+    deactivate HTTP</code></pre>
+<h3 id="sse-event-structure">SSE Event Structure<a class="headerlink" href="#sse-event-structure" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+    subgraph "SSE Event Types"
+        TSU[TaskStatusUpdateEvent]
+        TAU[TaskArtifactUpdateEvent]
+    end
+
+    subgraph "TaskStatusUpdateEvent"
+        TSU_Type[type: taskStatusUpdate]
+        TSU_Task[task: Task object]
+    end
+
+    subgraph "TaskArtifactUpdateEvent"
+        TAU_Type[type: taskArtifactUpdate]
+        TAU_TID[taskId: string]
+        TAU_Artifacts[artifacts: Artifact array]
+    end
+
+    TSU --&gt; TSU_Type
+    TSU --&gt; TSU_Task
+
+    TAU --&gt; TAU_Type
+    TAU --&gt; TAU_TID
+    TAU --&gt; TAU_Artifacts
+
+    style TSU fill:#d4edda
+    style TAU fill:#fff3cd</code></pre>
+<h2 id="multi-turn-conversation-flow">Multi-Turn Conversation Flow<a class="headerlink" href="#multi-turn-conversation-flow" title="Permanent link">&para;</a></h2>
+<p>Sessions enable multi-turn conversations where context is maintained across multiple messages.</p>
+<h3 id="multi-turn-conversation-sequence">Multi-Turn Conversation Sequence<a class="headerlink" href="#multi-turn-conversation-sequence" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant User as User/Client
+    participant Agent as A2A Agent
+    participant Session as Session Store
+
+    Note over User,Session: Turn 1: Initial Question
+
+    User-&gt;&gt;Agent: tasks/send&lt;br/&gt;taskId: task-1&lt;br/&gt;sessionId: session-123&lt;br/&gt;message: "What's 2+2?"
+
+    Agent-&gt;&gt;Session: Create session-123
+    Agent-&gt;&gt;Agent: Process message
+    Agent-&gt;&gt;Session: Store context
+
+    Agent--&gt;&gt;User: Task (completed)&lt;br/&gt;message: "2+2 equals 4"
+
+    Note over User,Session: Turn 2: Follow-up Question
+
+    User-&gt;&gt;Agent: tasks/send&lt;br/&gt;taskId: task-2&lt;br/&gt;sessionId: session-123&lt;br/&gt;message: "What about 3+3?"
+
+    Agent-&gt;&gt;Session: Retrieve context
+    Agent-&gt;&gt;Agent: Process with context
+    Agent-&gt;&gt;Session: Update context
+
+    Agent--&gt;&gt;User: Task (completed)&lt;br/&gt;message: "3+3 equals 6"
+
+    Note over User,Session: Turn 3: Contextual Question
+
+    User-&gt;&gt;Agent: tasks/send&lt;br/&gt;taskId: task-3&lt;br/&gt;sessionId: session-123&lt;br/&gt;message: "Add them together"
+
+    Agent-&gt;&gt;Session: Retrieve context
+    Note over Agent: Context: 4 and 6
+    Agent-&gt;&gt;Agent: Process: 4+6=10
+
+    Agent--&gt;&gt;User: Task (completed)&lt;br/&gt;message: "4 + 6 = 10"</code></pre>
+<h3 id="session-context-management">Session Context Management<a class="headerlink" href="#session-context-management" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph LR
+    subgraph "Session Context"
+        T1[Task 1&lt;br/&gt;2+2=4]
+        T2[Task 2&lt;br/&gt;3+3=6]
+        T3[Task 3&lt;br/&gt;4+6=10]
+
+        T1 --&gt;|context| T2
+        T2 --&gt;|context| T3
+    end
+
+    subgraph "Session Data"
+        Conv[Conversation History]
+        State[State Variables]
+        Meta[Metadata]
+    end
+
+    T1 --&gt; Conv
+    T2 --&gt; Conv
+    T3 --&gt; Conv
+
+    style Conv fill:#d4edda
+    style State fill:#fff3cd</code></pre>
+<h2 id="error-handling-flows">Error Handling Flows<a class="headerlink" href="#error-handling-flows" title="Permanent link">&para;</a></h2>
+<h3 id="protocol-error-flow">Protocol Error Flow<a class="headerlink" href="#protocol-error-flow" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Client
+    participant Server
+    participant ErrorHandler
+
+    Client-&gt;&gt;Server: Invalid JSON-RPC Request
+    activate Server
+
+    Server-&gt;&gt;ErrorHandler: Validate request
+    activate ErrorHandler
+    ErrorHandler--&gt;&gt;Server: ValidationError
+    deactivate ErrorHandler
+
+    Server-&gt;&gt;Server: Create error response
+    Note over Server: Error code: -32600
+
+    Server--&gt;&gt;Client: JSON-RPC Error Response
+    deactivate Server
+
+    Note over Client: Parse error
+    Client-&gt;&gt;Client: Raise InvalidRequestError</code></pre>
+<h3 id="application-error-flow">Application Error Flow<a class="headerlink" href="#application-error-flow" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Client
+    participant Server
+    participant TaskStore
+
+    Client-&gt;&gt;Server: tasks/get (non-existent task)
+    activate Server
+
+    Server-&gt;&gt;TaskStore: Find task
+    TaskStore--&gt;&gt;Server: nil (not found)
+
+    Server-&gt;&gt;Server: Create error response
+    Note over Server: Error code: -32001&lt;br/&gt;Task not found
+
+    Server--&gt;&gt;Client: JSON-RPC Error
+    deactivate Server
+
+    Client-&gt;&gt;Client: Raise TaskNotFoundError</code></pre>
+<h3 id="error-response-structure">Error Response Structure<a class="headerlink" href="#error-response-structure" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+    Error[JSON-RPC Error Response]
+
+    Error --&gt; JSONRPC[jsonrpc: 2.0]
+    Error --&gt; ID[id: request id]
+    Error --&gt; ErrorObj[error object]
+
+    ErrorObj --&gt; Code[code: number]
+    ErrorObj --&gt; Message[message: string]
+    ErrorObj --&gt; Data[data: optional object]
+
+    Code --&gt; StdCodes[Standard Codes&lt;br/&gt;-32700 to -32603]
+    Code --&gt; AppCodes[A2A Codes&lt;br/&gt;-32001 to -32004]
+
+    style Error fill:#f8d7da
+    style ErrorObj fill:#ffe1e1</code></pre>
+<h2 id="push-notification-flow">Push Notification Flow<a class="headerlink" href="#push-notification-flow" title="Permanent link">&para;</a></h2>
+<p>Servers supporting push notifications can proactively send updates to clients via webhooks.</p>
+<h3 id="push-notification-setup-and-delivery">Push Notification Setup and Delivery<a class="headerlink" href="#push-notification-setup-and-delivery" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Client
+    participant Server
+    participant Webhook as Client Webhook
+    participant Queue as Task Queue
+
+    Note over Client,Queue: Setup Phase
+    Client-&gt;&gt;Server: tasks/pushNotification/set
+    Note over Client: Provide webhook URL
+    Server-&gt;&gt;Server: Store webhook config
+    Server--&gt;&gt;Client: Success
+
+    Note over Client,Queue: Task Execution Phase
+    Client-&gt;&gt;Server: tasks/send
+    Server--&gt;&gt;Client: Task (submitted)
+    Note over Server: Process asynchronously
+
+    Server-&gt;&gt;Queue: Queue task
+    Queue-&gt;&gt;Queue: Process task
+
+    Note over Queue: State: working
+    Queue-&gt;&gt;Webhook: POST webhook URL
+    Note over Webhook: TaskStatusUpdateEvent
+    Webhook--&gt;&gt;Queue: 200 OK
+
+    Queue-&gt;&gt;Queue: Continue processing
+
+    Note over Queue: State: completed
+    Queue-&gt;&gt;Webhook: POST webhook URL
+    Note over Webhook: TaskStatusUpdateEvent
+    Webhook--&gt;&gt;Queue: 200 OK
+
+    Note over Client: Receives async updates</code></pre>
+<h3 id="webhook-retry-flow">Webhook Retry Flow<a class="headerlink" href="#webhook-retry-flow" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+    Send[Send Webhook] --&gt; HTTP[HTTP POST]
+    HTTP --&gt; Success{Success?}
+
+    Success --&gt;|200-299| Done[Done]
+    Success --&gt;|Error| Retry{Retries&lt;br/&gt;Remaining?}
+
+    Retry --&gt;|Yes| Wait[Wait with backoff]
+    Wait --&gt; HTTP
+
+    Retry --&gt;|No| Log[Log failure]
+    Log --&gt; Done
+
+    style Send fill:#d4edda
+    style Done fill:#d4edda
+    style Log fill:#f8d7da</code></pre>
+<h2 id="task-cancellation-flow">Task Cancellation Flow<a class="headerlink" href="#task-cancellation-flow" title="Permanent link">&para;</a></h2>
+<p>Clients can request task cancellation for non-terminal tasks.</p>
+<h3 id="cancellation-sequence">Cancellation Sequence<a class="headerlink" href="#cancellation-sequence" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Client
+    participant Server
+    participant Worker as Task Worker
+    participant Store as Task Store
+
+    Note over Client,Store: Task is running
+
+    Client-&gt;&gt;Server: tasks/cancel (task-id)
+    activate Server
+
+    Server-&gt;&gt;Store: Get task
+    Store--&gt;&gt;Server: Task (state: working)
+
+    Server-&gt;&gt;Server: Validate cancelable
+    Note over Server: Check state is not terminal
+
+    Server-&gt;&gt;Worker: Send cancel signal
+    activate Worker
+    Worker-&gt;&gt;Worker: Stop processing
+    Worker-&gt;&gt;Store: Update state: canceled
+    Worker--&gt;&gt;Server: Canceled
+    deactivate Worker
+
+    Server-&gt;&gt;Store: Get updated task
+    Store--&gt;&gt;Server: Task (state: canceled)
+
+    Server--&gt;&gt;Client: Task (canceled)
+    deactivate Server</code></pre>
+<h3 id="cancellation-edge-cases">Cancellation Edge Cases<a class="headerlink" href="#cancellation-edge-cases" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+    Cancel[Cancel Request] --&gt; GetTask[Get Task]
+    GetTask --&gt; CheckState{Task State?}
+
+    CheckState --&gt;|submitted| CanCancel[Can Cancel]
+    CheckState --&gt;|working| CanCancel
+    CheckState --&gt;|input-required| CanCancel
+
+    CheckState --&gt;|completed| AlreadyDone[Already Complete]
+    CheckState --&gt;|failed| AlreadyDone
+    CheckState --&gt;|canceled| AlreadyDone
+
+    CanCancel --&gt; Signal[Send Cancel Signal]
+    Signal --&gt; Update[Update State]
+    Update --&gt; Return[Return Task]
+
+    AlreadyDone --&gt; Error[TaskNotCancelableError]
+
+    style CanCancel fill:#d4edda
+    style Error fill:#f8d7da</code></pre>
+<h2 id="state-transitions">State Transitions<a class="headerlink" href="#state-transitions" title="Permanent link">&para;</a></h2>
+<h3 id="valid-state-transition-diagram">Valid State Transition Diagram<a class="headerlink" href="#valid-state-transition-diagram" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>stateDiagram-v2
+    direction LR
+
+    [*] --&gt; submitted
+
+    submitted --&gt; working: Agent starts
+    submitted --&gt; failed: Immediate error
+    submitted --&gt; canceled: Client cancels
+
+    working --&gt; input-required: Needs input
+    working --&gt; completed: Success
+    working --&gt; failed: Error
+    working --&gt; canceled: Client cancels
+
+    input-required --&gt; working: Input provided
+    input-required --&gt; failed: Timeout
+    input-required --&gt; canceled: Client cancels
+
+    completed --&gt; [*]
+    failed --&gt; [*]
+    canceled --&gt; [*]
+
+    note right of submitted
+        Initial state when
+        task is created
+    end note
+
+    note right of working
+        Agent is actively
+        processing the task
+    end note
+
+    note right of input-required
+        Agent needs more
+        information from client
+    end note
+
+    note left of completed
+        Terminal: Task
+        completed successfully
+    end note
+
+    note left of failed
+        Terminal: Task
+        failed with error
+    end note
+
+    note left of canceled
+        Terminal: Task
+        was canceled
+    end note</code></pre>
+<h3 id="state-transition-rules">State Transition Rules<a class="headerlink" href="#state-transition-rules" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+    subgraph "Active States (Can Transition)"
+        S[submitted]
+        W[working]
+        IR[input-required]
+    end
+
+    subgraph "Terminal States (No Transitions)"
+        C[completed]
+        F[failed]
+        X[canceled]
+        U[unknown]
+    end
+
+    S --&gt; W
+    S --&gt; F
+    S --&gt; X
+
+    W --&gt; IR
+    W --&gt; C
+    W --&gt; F
+    W --&gt; X
+
+    IR --&gt; W
+    IR --&gt; F
+    IR --&gt; X
+
+    style S fill:#fff3cd
+    style W fill:#fff3cd
+    style IR fill:#fff3cd
+    style C fill:#d4edda
+    style F fill:#f8d7da
+    style X fill:#e1f5ff</code></pre>
+<h2 id="component-interactions">Component Interactions<a class="headerlink" href="#component-interactions" title="Permanent link">&para;</a></h2>
+<h3 id="complete-requestresponse-flow">Complete Request/Response Flow<a class="headerlink" href="#complete-requestresponse-flow" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "Client Side"
+        App[Application Code]
+        ClientAPI[Client API]
+        ReqBuilder[Request Builder]
+        HTTPClient[HTTP Client]
+    end
+
+    subgraph "Network"
+        Transport[HTTP/HTTPS]
+    end
+
+    subgraph "Server Side"
+        HTTPServer[HTTP Server]
+        Router[Request Router]
+        Handler[Request Handler]
+        Logic[Business Logic]
+    end
+
+    subgraph "Data Layer"
+        Models[Domain Models]
+        Protocol[JSON-RPC Protocol]
+        TaskStore[Task Storage]
+    end
+
+    App --&gt; ClientAPI
+    ClientAPI --&gt; ReqBuilder
+    ReqBuilder --&gt; Models
+    ReqBuilder --&gt; Protocol
+    ReqBuilder --&gt; HTTPClient
+
+    HTTPClient --&gt; Transport
+    Transport --&gt; HTTPServer
+
+    HTTPServer --&gt; Router
+    Router --&gt; Handler
+    Handler --&gt; Logic
+
+    Logic --&gt; Models
+    Handler --&gt; Models
+    Handler --&gt; Protocol
+    Logic --&gt; TaskStore
+
+    Models -.response.-&gt; Handler
+    Protocol -.response.-&gt; Handler
+    Handler -.response.-&gt; HTTPServer
+    HTTPServer -.response.-&gt; Transport
+    Transport -.response.-&gt; HTTPClient
+    HTTPClient -.response.-&gt; App
+
+    style App fill:#e1f5ff
+    style Logic fill:#fff3cd
+    style Models fill:#d4edda
+    style Protocol fill:#ffe1e1</code></pre>
+<h3 id="model-interaction-flow">Model Interaction Flow<a class="headerlink" href="#model-interaction-flow" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+    subgraph "Task Creation Flow"
+        CreateTask[Create Task] --&gt; CreateStatus[Create TaskStatus]
+        CreateStatus --&gt; CreateState[Create TaskState]
+        CreateTask --&gt; CreateMessage[Create Message]
+        CreateMessage --&gt; CreateParts[Create Parts]
+        CreateParts --&gt; TextPart[TextPart]
+        CreateParts --&gt; FilePart[FilePart]
+        CreateParts --&gt; DataPart[DataPart]
+    end
+
+    subgraph "Serialization Flow"
+        ToHash[to_h] --&gt; HashTask[Hash: Task]
+        HashTask --&gt; HashStatus[Hash: TaskStatus]
+        HashStatus --&gt; HashState[String: state]
+        HashTask --&gt; HashMessage[Hash: Message]
+        HashMessage --&gt; HashParts[Array: Parts]
+    end
+
+    subgraph "Deserialization Flow"
+        FromHash[from_hash] --&gt; ParseTask[Parse Task]
+        ParseTask --&gt; ParseStatus[TaskStatus.from_hash]
+        ParseStatus --&gt; ParseState[TaskState.new]
+        ParseTask --&gt; ParseMessage[Message.from_hash]
+        ParseMessage --&gt; ParseParts[Part.from_hash]
+        ParseParts --&gt; Factory[Factory Pattern]
+        Factory --&gt; CreateText[TextPart.from_hash]
+        Factory --&gt; CreateFile[FilePart.from_hash]
+        Factory --&gt; CreateData[DataPart.from_hash]
+    end
+
+    CreateTask -.serialize.-&gt; ToHash
+    FromHash -.deserialize.-&gt; CreateTask
+
+    style CreateTask fill:#d4edda
+    style ToHash fill:#fff3cd
+    style FromHash fill:#e1f5ff</code></pre>
+<h2 id="protocol-method-summary">Protocol Method Summary<a class="headerlink" href="#protocol-method-summary" title="Permanent link">&para;</a></h2>
+<h3 id="all-protocol-methods">All Protocol Methods<a class="headerlink" href="#all-protocol-methods" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "Discovery"
+        D1[GET /.well-known/agent.json&lt;br/&gt;Returns: AgentCard]
+    end
+
+    subgraph "Task Operations"
+        T1[tasks/send&lt;br/&gt;Synchronous task execution]
+        T2[tasks/sendSubscribe&lt;br/&gt;Streaming task execution]
+        T3[tasks/get&lt;br/&gt;Get task status]
+        T4[tasks/cancel&lt;br/&gt;Cancel running task]
+        T5[tasks/resubscribe&lt;br/&gt;Resubscribe to streaming]
+    end
+
+    subgraph "Push Notifications"
+        P1[tasks/pushNotification/set&lt;br/&gt;Configure webhook]
+        P2[tasks/pushNotification/get&lt;br/&gt;Get webhook config]
+    end
+
+    style D1 fill:#d1ecf1
+    style T1 fill:#d4edda
+    style T2 fill:#fff3cd
+    style T3 fill:#e1f5ff
+    style T4 fill:#f8d7da
+    style P1 fill:#ffe1e1</code></pre>
+<h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../">Architecture Overview</a> - High-level architecture and components</li>
+<li><a href="../design/">Design Principles</a> - Design patterns and decisions</li>
+<li><a href="../gem-architecture/">Gem Architecture</a> - Gem architecture document</li>
+<li><a href="../../guides/tasks/">Tasks Guide</a> - Working with tasks</li>
+<li><a href="../../guides/messages/">Messages Guide</a> - Working with messages</li>
+</ul>
+<hr />
+<p><a href="../../">Back to Documentation Home</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Dewayne VanHoozer
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/madbomber/a2a" target="_blank" rel="noopener" title="A2A on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://rubygems.org/gems/a2a" target="_blank" rel="noopener" title="A2A on RubyGems" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M116.7 33.8c4.5-6.1 11.7-9.8 19.3-9.8h240c7.6 0 14.8 3.6 19.3 9.8l112 152c6.8 9.2 6.1 21.9-1.5 30.4l-232 256c-4.5 5-11 7.9-17.8 7.9s-13.2-2.9-17.8-7.9l-232-256c-7.7-8.5-8.3-21.2-1.5-30.4zm38.5 39.8c-3.3 2.5-4.2 7-2.1 10.5l57.4 95.7L63.3 192c-4.1.3-7.3 3.8-7.3 8s3.2 7.6 7.3 8l192 16h1.3l192-16c4.1-.3 7.3-3.8 7.3-8s-3.2-7.6-7.3-8l-147.2-12.3 57.4-95.6c2.1-3.5 1.2-8.1-2.1-10.5s-7.9-2-10.7 1l-90 97.6-90.1-97.6c-2.8-3-7.4-3.4-10.7-1"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.path", "navigation.indexes", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../../assets/js/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

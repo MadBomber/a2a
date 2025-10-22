@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" style="background:transparent">
+  <defs>
+    <style>
+      .state-box { fill: #2d3748; stroke: #4a5568; stroke-width: 2; }
+      .state-text { fill: #e2e8f0; font-family: Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+      .terminal-box { fill: #2f855a; stroke: #38a169; stroke-width: 2; }
+      .arrow { stroke: #63b3ed; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .arrow-text { fill: #a0aec0; font-family: Arial, sans-serif; font-size: 11px; text-anchor: middle; }
+      .start-circle { fill: #4a5568; }
+      .end-circle { fill: #4a5568; stroke: #4a5568; stroke-width: 3; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#63b3ed" />
+    </marker>
+  </defs>
+
+  <!-- Start state -->
+  <circle cx="100" cy="100" r="15" class="start-circle"/>
+
+  <!-- submitted -->
+  <rect x="200" y="70" width="120" height="60" rx="8" class="state-box"/>
+  <text x="260" y="105" class="state-text">submitted</text>
+
+  <!-- working -->
+  <rect x="400" y="150" width="120" height="60" rx="8" class="state-box"/>
+  <text x="460" y="185" class="state-text">working</text>
+
+  <!-- input-required -->
+  <rect x="400" y="280" width="120" height="60" rx="8" class="state-box"/>
+  <text x="460" y="310" class="state-text">input-required</text>
+  <text x="460" y="325" class="state-text" style="font-size:12px"></text>
+
+  <!-- completed -->
+  <rect x="200" y="400" width="120" height="60" rx="8" class="terminal-box"/>
+  <text x="260" y="435" class="state-text">completed</text>
+
+  <!-- failed -->
+  <rect x="400" y="400" width="120" height="60" rx="8" class="terminal-box"/>
+  <text x="460" y="435" class="state-text">failed</text>
+
+  <!-- canceled -->
+  <rect x="600" y="400" width="120" height="60" rx="8" class="terminal-box"/>
+  <text x="660" y="435" class="state-text">canceled</text>
+
+  <!-- End states -->
+  <circle cx="260" cy="520" r="10" class="end-circle"/>
+  <circle cx="260" cy="520" r="6" class="start-circle"/>
+  <circle cx="460" cy="520" r="10" class="end-circle"/>
+  <circle cx="460" cy="520" r="6" class="start-circle"/>
+  <circle cx="660" cy="520" r="10" class="end-circle"/>
+  <circle cx="660" cy="520" r="6" class="start-circle"/>
+
+  <!-- Arrows -->
+  <path d="M 115,100 L 190,100" class="arrow"/>
+  <path d="M 320,100 L 390,165" class="arrow"/>
+  <path d="M 460,210 L 460,270" class="arrow"/>
+  <path d="M 390,310 L 320,430" class="arrow"/>
+  <path d="M 450,180 L 260,390" class="arrow"/>
+  <path d="M 470,210 L 460,390" class="arrow"/>
+  <path d="M 520,180 L 650,390" class="arrow"/>
+  <path d="M 520,310 L 610,390" class="arrow"/>
+  <path d="M 320,120 L 610,390" class="arrow"/>
+
+  <!-- Back arrow from input-required to working -->
+  <path d="M 390,290 Q 350,235 390,200" class="arrow"/>
+
+  <!-- End arrows -->
+  <path d="M 260,460 L 260,500" class="arrow"/>
+  <path d="M 460,460 L 460,500" class="arrow"/>
+  <path d="M 660,460 L 660,500" class="arrow"/>
+</svg>

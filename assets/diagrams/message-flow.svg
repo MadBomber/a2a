@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300" style="background:transparent">
+  <defs>
+    <style>
+      .node-box { fill: #2d3748; stroke: #4a5568; stroke-width: 2; }
+      .node-text { fill: #e2e8f0; font-family: Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+      .node-label { fill: #a0aec0; font-family: Arial, sans-serif; font-size: 11px; text-anchor: middle; }
+      .arrow { stroke: #63b3ed; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .arrow-text { fill: #a0aec0; font-family: Arial, sans-serif; font-size: 12px; text-anchor: middle; }
+      .client-box { fill: #2c5282; stroke: #3182ce; }
+      .task-box { fill: #744210; stroke: #975a16; }
+      .result-box { fill: #22543d; stroke: #2f855a; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#63b3ed" />
+    </marker>
+  </defs>
+
+  <!-- Client/User -->
+  <rect x="50" y="100" width="140" height="80" rx="8" class="node-box client-box"/>
+  <text x="120" y="135" class="node-text">Client/User</text>
+
+  <!-- Task -->
+  <rect x="280" y="100" width="140" height="80" rx="8" class="node-box task-box"/>
+  <text x="350" y="135" class="node-text">Task</text>
+
+  <!-- Results -->
+  <rect x="510" y="100" width="140" height="80" rx="8" class="node-box result-box"/>
+  <text x="580" y="135" class="node-text">Results</text>
+
+  <!-- Arrows -->
+  <path d="M 190,125 L 270,125" class="arrow"/>
+  <text x="230" y="115" class="arrow-text">Message</text>
+  <text x="230" y="127" class="arrow-text">with Parts</text>
+
+  <path d="M 270,155 L 190,155" class="arrow"/>
+  <text x="230" y="170" class="arrow-text">Status Message</text>
+
+  <path d="M 420,140 L 500,140" class="arrow"/>
+  <text x="460" y="130" class="arrow-text">Artifacts</text>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" style="background:transparent">
+  <defs>
+    <style>
+      .node-box { fill: #2d3748; stroke: #4a5568; stroke-width: 2; }
+      .node-text { fill: #e2e8f0; font-family: Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+      .arrow { stroke: #63b3ed; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .arrow-text { fill: #a0aec0; font-family: Arial, sans-serif; font-size: 12px; text-anchor: middle; }
+      .dashed { stroke-dasharray: 5,5; stroke: #718096; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#63b3ed" />
+    </marker>
+  </defs>
+
+  <!-- Client -->
+  <rect x="50" y="150" width="120" height="60" rx="8" class="node-box"/>
+  <text x="110" y="185" class="node-text">Client</text>
+
+  <!-- Agent Card -->
+  <rect x="250" y="50" width="120" height="60" rx="8" class="node-box"/>
+  <text x="310" y="85" class="node-text">Agent Card</text>
+
+  <!-- A2A Server -->
+  <rect x="250" y="150" width="120" height="60" rx="8" class="node-box"/>
+  <text x="310" y="185" class="node-text">A2A Server</text>
+
+  <!-- Agent Logic -->
+  <rect x="450" y="150" width="120" height="60" rx="8" class="node-box"/>
+  <text x="510" y="185" class="node-text">Agent Logic</text>
+
+  <!-- Arrows -->
+  <path d="M 170,170 L 240,90" class="arrow"/>
+  <text x="200" y="120" class="arrow-text">1. Discover</text>
+
+  <path d="M 170,180 L 240,180" class="arrow"/>
+  <text x="200" y="170" class="arrow-text">2. Send Task</text>
+
+  <path d="M 370,180 L 440,180" class="arrow"/>
+  <text x="400" y="170" class="arrow-text">3. Process</text>
+
+  <path d="M 440,190 L 370,190" class="arrow"/>
+  <text x="400" y="210" class="arrow-text">4. Return Results</text>
+
+  <path d="M 240,200 L 170,200" class="arrow"/>
+  <text x="200" y="220" class="arrow-text">5. Task Response</text>
+
+  <!-- Optional features (dashed) -->
+  <path d="M 310,220 Q 200,280 110,220" class="dashed arrow"/>
+  <text x="200" y="280" class="arrow-text">Optional Streaming</text>
+
+  <path d="M 310,225 Q 220,300 110,225" class="dashed arrow"/>
+  <text x="200" y="315" class="arrow-text">Optional Push Notifications</text>
+</svg>

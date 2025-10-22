@@ -1,0 +1,27 @@
+/* Custom CSS for A2A Documentation */
+
+:root {
+  --a2a-primary: #2196F3;
+  --a2a-accent: #03A9F4;
+}
+
+/* Code blocks */
+.highlight pre {
+  border-radius: 6px;
+}
+
+/* Admonitions */
+.admonition {
+  border-radius: 6px;
+}
+
+/* Tables */
+table {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Navigation */
+.md-tabs {
+  background-color: var(--a2a-primary);
+}
