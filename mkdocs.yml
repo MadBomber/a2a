@@ -144,6 +144,7 @@ extra:
 # Navigation
 nav:
   - Home: index.md
+  - The Handshake: the_handshake.md
   - Installation: installation.md
   - Quick Start: quickstart.md
   - Guides:
