@@ -2,10 +2,18 @@
   <h1>A2A</h1>
   <img src="docs/assets/images/the_handshake.png" alt="The Handshake" width="600">
   <p>Agent to Agent Protocol</p>
-  [![Gem Version](https://badge.fury.io/rb/a2a.svg)](https://badge.fury.io/rb/a2a)
-  ![Build](https://github.com/wilsonsilva/a2a/actions/workflows/main.yml/badge.svg)
-  [![Maintainability](https://qlty.sh/badges/73ebc4bb-d1db-4b5b-9a7c-a4acd59dfe69/maintainability.svg)](https://qlty.sh/gh/wilsonsilva/projects/a2a)
-  [![Code Coverage](https://qlty.sh/badges/73ebc4bb-d1db-4b5b-9a7c-a4acd59dfe69/test_coverage.svg)](https://qlty.sh/gh/wilsonsilva/projects/a2a)
+  <p>
+    <a href="https://badge.fury.io/rb/a2a">
+      <img src="https://badge.fury.io/rb/a2a.svg" alt="Gem Version">
+    </a>
+    <img src="https://github.com/wilsonsilva/a2a/actions/workflows/main.yml/badge.svg" alt="Build">
+    <a href="https://qlty.sh/gh/wilsonsilva/projects/a2a">
+      <img src="https://qlty.sh/badges/73ebc4bb-d1db-4b5b-9a7c-a4acd59dfe69/maintainability.svg" alt="Maintainability">
+    </a>
+    <a href="https://qlty.sh/gh/wilsonsilva/projects/a2a">
+      <img src="https://qlty.sh/badges/73ebc4bb-d1db-4b5b-9a7c-a4acd59dfe69/test_coverage.svg" alt="Code Coverage">
+    </a>
+  </p>
 </div>
 
 A Ruby implementation of the **A2A (Agent2Agent) protocol** - an open protocol enabling communication and interoperability between opaque agentic applications.

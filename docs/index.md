@@ -4,12 +4,12 @@
 <tr>
 <td width="30%" valign="top">
   <div align="center">
-      <img src="docs/assets/images/the_handshake.png" alt="The Handshake" width="600">
+      <img src="assets/images/the_handshake.png" alt="The Handshake" width="600">
   </div>
 </td>
 <td width="70%" valign="top">
 
-Welcome to **A2A**, a Ruby implementation of the Agent2Agent protocol for enabling communication and interoperability between AI agents.
+Welcome to **A2A**, a Ruby implementation of the Agent to Agent protocol for enabling communication and interoperability between AI agents.
 <br/><br/>
 The A2A (Agent2Agent) protocol is an open standard enabling communication between independent agentic applications. This Ruby gem provides a complete implementation including core data models, JSON-RPC 2.0 messaging, and base classes for building A2A clients and servers.
 </td>
