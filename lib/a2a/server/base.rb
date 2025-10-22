@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
+require 'logger'
+
 module A2A
   module Server
     # Base class for A2A servers
     # An A2A server exposes an HTTP endpoint that implements the A2A protocol methods
     class Base
-      attr_reader :agent_card
+      attr_reader :agent_card, :logger
 
-      def initialize(agent_card)
+      def initialize(agent_card, logger: nil)
         @agent_card = agent_card
+        @logger = logger || Logger.new($stdout, level: Logger::INFO)
       end
 
       # Handle an incoming A2A request

@@ -1,6 +1,6 @@
 # A2A Examples
 
-This section provides comprehensive, practical examples for building Agent2Agent (A2A) protocol implementations using the A2A Ruby gem. Each example is designed to be copy-paste-ready and production-quality.
+This section provides comprehensive, practical examples for building Agent to Agent (A2A) protocol implementations using the A2A Ruby gem. Each example is designed to be copy-paste-ready and production-quality.
 
 ## Table of Contents
 
@@ -26,7 +26,7 @@ The A2A protocol enables communication and interoperability between opaque agent
 
 ### What is A2A?
 
-A2A (Agent2Agent) is an open protocol that enables:
+A2A (Agent to Agent) is an open protocol that enables:
 
 1. **Agent Discovery**: Through AgentCard metadata files
 2. **Task Management**: Submit, monitor, and cancel agent tasks

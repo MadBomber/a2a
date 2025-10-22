@@ -11,7 +11,7 @@
 
 Welcome to **A2A**, a Ruby implementation of the Agent to Agent protocol for enabling communication and interoperability between AI agents.
 <br/><br/>
-The A2A (Agent2Agent) protocol is an open standard enabling communication between independent agentic applications. This Ruby gem provides a complete implementation including core data models, JSON-RPC 2.0 messaging, and base classes for building A2A clients and servers.
+The A2A (Agent to Agent) protocol is an open standard enabling communication between independent agentic applications. This Ruby gem provides a complete implementation including core data models, JSON-RPC 2.0 messaging, and base classes for building A2A clients and servers.
 </td>
 </tr>
 </table>
@@ -164,7 +164,7 @@ See the [Architecture Guide](architecture/index.md) for detailed information.
 
 ## What's the A2A Protocol?
 
-The Agent2Agent (A2A) protocol is an open standard created by Google and the community to enable communication between AI agents built on different frameworks and platforms. It provides:
+The Agent to Agent (A2A) protocol is an open standard created by Google and the community to enable communication between AI agents built on different frameworks and platforms. It provides:
 
 - **Standard Discovery**: Agents publish capabilities via Agent Cards
 - **Task Management**: Structured workflow for agent interactions

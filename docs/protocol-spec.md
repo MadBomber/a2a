@@ -1,10 +1,10 @@
-# Agent2Agent (A2A) Protocol Specification
+# Agent to Agent (A2A) Protocol Specification
 
 ![A2A Banner](https://storage.googleapis.com/gweb-developer-goog-blog-assets/original_images/A2A_banner.png)
 
 **_An open protocol enabling communication and interoperability between opaque agentic applications._**
 
-One of the biggest challenges in enterprise AI adoption is getting agents built on different frameworks and vendors to work together. That's why we created an open *Agent2Agent (A2A) protocol*, a collaborative way to help agents across different ecosystems communicate with each other. Google is driving this open protocol initiative for the industry because we believe this protocol will be **critical to support multi-agent communication by giving your agents a common language – irrespective of the framework or vendor they are built on**.
+One of the biggest challenges in enterprise AI adoption is getting agents built on different frameworks and vendors to work together. That's why we created an open *Agent to Agent (A2A) protocol*, a collaborative way to help agents across different ecosystems communicate with each other. Google is driving this open protocol initiative for the industry because we believe this protocol will be **critical to support multi-agent communication by giving your agents a common language – irrespective of the framework or vendor they are built on**.
 
 With *A2A*, agents can show each other their capabilities and negotiate how they will interact with users (via text, forms, or bidirectional audio/video) – all while working securely together.
 
@@ -14,7 +14,7 @@ Watch [this demo video](https://storage.googleapis.com/gweb-developer-goog-blog-
 
 ## Conceptual Overview
 
-The Agent2Agent (A2A) protocol facilitates communication between independent AI agents. Here are the core concepts:
+The Agent to Agent (A2A) protocol facilitates communication between independent AI agents. Here are the core concepts:
 
 *   **Agent Card:** A public metadata file (usually at `/.well-known/agent.json`) describing an agent's capabilities, skills, endpoint URL, and authentication requirements. Clients use this for discovery.
 *   **A2A Server:** An agent exposing an HTTP endpoint that implements the A2A protocol methods (defined in the [json specification](https://google.github.io/A2A/#/specification)). It receives requests and manages task execution.

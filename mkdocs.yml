@@ -13,7 +13,7 @@ edit_uri: edit/main/docs/
 # Configuration
 theme:
   name: material
-  
+
   # Color scheme - Default to light mode
   palette:
     # Palette toggle for light mode (default)
@@ -23,7 +23,7 @@ theme:
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
-    
+
     # Palette toggle for dark mode
     - scheme: slate
       primary: blue
@@ -143,36 +143,37 @@ extra:
 
 # Navigation
 nav:
-  - Home: index.md
-  - The Handshake: the_handshake.md
+  - Home:
+      - index.md
+      - What is a protocol: the_handshake.md
   - Installation: installation.md
   - Quick Start: quickstart.md
   - Guides:
-    - guides/index.md
-    - Getting Started: guides/getting-started.md
-    - Creating Agent Cards: guides/agent-cards.md
-    - Working with Tasks: guides/tasks.md
-    - Messages and Parts: guides/messages.md
-    - Handling Artifacts: guides/artifacts.md
-    - Error Handling: guides/errors.md
+      - guides/index.md
+      - Getting Started: guides/getting-started.md
+      - Creating Agent Cards: guides/agent-cards.md
+      - Working with Tasks: guides/tasks.md
+      - Messages and Parts: guides/messages.md
+      - Handling Artifacts: guides/artifacts.md
+      - Error Handling: guides/errors.md
   - API Reference:
-    - api/index.md
-    - Models: api/models.md
-    - Protocol: api/protocol.md
-    - Client: api/client.md
-    - Server: api/server.md
+      - api/index.md
+      - Models: api/models.md
+      - Protocol: api/protocol.md
+      - Client: api/client.md
+      - Server: api/server.md
   - Architecture:
-    - Overview: architecture/index.md
-    - Gem Architecture: architecture/gem-architecture.md
-    - Design Principles: architecture/design.md
-    - Protocol Flow: architecture/flow.md
+      - Overview: architecture/index.md
+      - Gem Architecture: architecture/gem-architecture.md
+      - Design Principles: architecture/design.md
+      - Protocol Flow: architecture/flow.md
   - Examples:
-    - examples/index.md
-    - Basic Usage: examples/basic.md
-    - Building a Client: examples/client.md
-    - Building a Server: examples/server.md
+      - examples/index.md
+      - Basic Usage: examples/basic.md
+      - Building a Client: examples/client.md
+      - Building a Server: examples/server.md
   - Advanced:
-    - Streaming Support: advanced/streaming.md
-    - Push Notifications: advanced/push-notifications.md
-    - Multi-turn Conversations: advanced/conversations.md
+      - Streaming Support: advanced/streaming.md
+      - Push Notifications: advanced/push-notifications.md
+      - Multi-turn Conversations: advanced/conversations.md
   - Protocol Specification: protocol-spec.md

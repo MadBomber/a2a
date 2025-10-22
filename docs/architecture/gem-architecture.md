@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Ruby gem implements the A2A (Agent2Agent) protocol, an open protocol enabling communication and interoperability between agentic applications. The protocol uses JSON-RPC 2.0 for message exchange.
+This Ruby gem implements the A2A (Agent to Agent) protocol, an open protocol enabling communication and interoperability between agentic applications. The protocol uses JSON-RPC 2.0 for message exchange.
 
 ## Architecture Diagram
 
@@ -11,35 +11,35 @@ This Ruby gem implements the A2A (Agent2Agent) protocol, an open protocol enabli
 │                        A2A Gem                              │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
-│  ┌──────────────┐         ┌──────────────┐                 │
-│  │   Client     │◄───────►│   Server     │                 │
-│  │    Base      │         │    Base      │                 │
-│  └──────────────┘         └──────────────┘                 │
+│  ┌──────────────┐         ┌──────────────┐                  │
+│  │   Client     │◄───────►│   Server     │                  │
+│  │    Base      │         │    Base      │                  │
+│  └──────────────┘         └──────────────┘                  │
 │         │                         │                         │
 │         │                         │                         │
 │         ▼                         ▼                         │
-│  ┌─────────────────────────────────────────┐               │
-│  │           Protocol Layer                 │               │
-│  │  ┌─────────┐  ┌──────────┐  ┌────────┐ │               │
-│  │  │ Request │  │ Response │  │ Error  │ │               │
-│  │  └─────────┘  └──────────┘  └────────┘ │               │
-│  └─────────────────────────────────────────┘               │
+│  ┌─────────────────────────────────────────┐                │
+│  │           Protocol Layer                │                │
+│  │  ┌─────────┐  ┌──────────┐  ┌────────┐  │                │
+│  │  │ Request │  │ Response │  │ Error  │  │                │
+│  │  └─────────┘  └──────────┘  └────────┘  │                │
+│  └─────────────────────────────────────────┘                │
 │         │                         │                         │
 │         │                         │                         │
 │         ▼                         ▼                         │
-│  ┌─────────────────────────────────────────┐               │
-│  │            Models Layer                  │               │
-│  │  ┌──────────────┐  ┌──────────────┐    │               │
-│  │  │  AgentCard   │  │    Task      │    │               │
-│  │  │ Capabilities │  │   Status     │    │               │
-│  │  │    Skills    │  │   Message    │    │               │
-│  │  └──────────────┘  └──────────────┘    │               │
-│  │  ┌──────────────┐  ┌──────────────┐    │               │
-│  │  │    Parts     │  │  Artifacts   │    │               │
-│  │  │ Text/File/   │  │              │    │               │
-│  │  │    Data      │  │              │    │               │
-│  │  └──────────────┘  └──────────────┘    │               │
-│  └─────────────────────────────────────────┘               │
+│  ┌─────────────────────────────────────────┐                │
+│  │            Models Layer                 │                │
+│  │  ┌──────────────┐  ┌──────────────┐     │                │
+│  │  │  AgentCard   │  │    Task      │     │                │
+│  │  │ Capabilities │  │   Status     │     │                │
+│  │  │    Skills    │  │   Message    │     │                │
+│  │  └──────────────┘  └──────────────┘     │                │
+│  │  ┌──────────────┐  ┌──────────────┐     │                │
+│  │  │    Parts     │  │  Artifacts   │     │                │
+│  │  │ Text/File/   │  │              │     │                │
+│  │  │    Data      │  │              │     │                │
+│  │  └──────────────┘  └──────────────┘     │                │
+│  └─────────────────────────────────────────┘                │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -52,24 +52,24 @@ lib/a2a/
 ├── error.rb                    # Error classes (JSON-RPC and A2A specific)
 │
 ├── models/                     # Data models from A2A protocol specification
-│   ├── agent_card.rb          # Agent metadata and discovery
-│   ├── agent_capabilities.rb  # Agent capabilities (streaming, push notifications)
-│   ├── agent_skill.rb         # Agent skill definition
-│   ├── agent_provider.rb      # Agent provider information
+│   ├── agent_card.rb           # Agent metadata and discovery
+│   ├── agent_capabilities.rb   # Agent capabilities (streaming, push notifications)
+│   ├── agent_skill.rb          # Agent skill definition
+│   ├── agent_provider.rb       # Agent provider information
 │   ├── agent_authentication.rb # Authentication configuration
-│   ├── task.rb                # Task (central unit of work)
-│   ├── task_status.rb         # Task status with state and timestamp
-│   ├── task_state.rb          # Task state enum (submitted, working, etc.)
-│   ├── message.rb             # Communication turns (user/agent)
-│   ├── part.rb                # Base class for message parts
-│   ├── text_part.rb           # Text content part
-│   ├── file_part.rb           # File content part
-│   ├── file_content.rb        # File representation (bytes or URI)
-│   ├── data_part.rb           # Structured data part (JSON)
-│   ├── artifact.rb            # Agent-generated outputs
+│   ├── task.rb                 # Task (central unit of work)
+│   ├── task_status.rb          # Task status with state and timestamp
+│   ├── task_state.rb           # Task state enum (submitted, working, etc.)
+│   ├── message.rb              # Communication turns (user/agent)
+│   ├── part.rb                 # Base class for message parts
+│   ├── text_part.rb            # Text content part
+│   ├── file_part.rb            # File content part
+│   ├── file_content.rb         # File representation (bytes or URI)
+│   ├── data_part.rb            # Structured data part (JSON)
+│   ├── artifact.rb             # Agent-generated outputs
 │   └── push_notification_config.rb # Push notification configuration
 │
-├── protocol/                   # JSON-RPC protocol implementation
+├── protocol/                  # JSON-RPC protocol implementation
 │   ├── request.rb             # Base JSON-RPC request
 │   ├── response.rb            # Base JSON-RPC response
 │   ├── error.rb               # Protocol error representation
@@ -78,13 +78,13 @@ lib/a2a/
 │   ├── events/                # SSE events (future)
 │   └── errors/                # Specific error types (future)
 │
-├── client/                     # A2A Client implementation
+├── client/                    # A2A Client implementation
 │   └── base.rb                # Base client class
 │
-├── server/                     # A2A Server implementation
+├── server/                    # A2A Server implementation
 │   └── base.rb                # Base server class
 │
-└── utils/                      # Utilities (future)
+└── utils/                     # Utilities (future)
     ├── json_schema_validator.rb
     └── serializer.rb
 ```

@@ -15,7 +15,7 @@ This document provides a comprehensive overview of the A2A Ruby gem's architectu
 
 ## Introduction
 
-The A2A Ruby gem implements the Agent2Agent (A2A) protocol, an open protocol created by Google that enables communication and interoperability between agentic applications. The gem follows a clean, layered architecture that separates concerns and makes the codebase maintainable, testable, and extensible.
+The A2A Ruby gem implements the Agent to Agent (A2A) protocol, an open protocol created by Google that enables communication and interoperability between agentic applications. The gem follows a clean, layered architecture that separates concerns and makes the codebase maintainable, testable, and extensible.
 
 The architecture is designed around these core principles:
 - **Protocol Compliance**: Strictly adheres to the A2A JSON schema specification and JSON-RPC 2.0
